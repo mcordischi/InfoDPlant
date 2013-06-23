@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+project( ServerApp )
+find_package( OpenCV REQUIRED )
+add_executable( Server.o serverApp.cpp )
+target_link_libraries( Server.o ${OpenCV_LIBS} )

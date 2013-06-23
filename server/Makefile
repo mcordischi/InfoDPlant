@@ -99,24 +99,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named serverApplication
+# Target rules for targets named Server.o
 
 # Build rule for target.
-serverApplication: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 serverApplication
-.PHONY : serverApplication
+Server.o: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Server.o
+.PHONY : Server.o
 
 # fast build rule for target.
-serverApplication/fast:
-	$(MAKE) -f CMakeFiles/serverApplication.dir/build.make CMakeFiles/serverApplication.dir/build
-.PHONY : serverApplication/fast
+Server.o/fast:
+	$(MAKE) -f CMakeFiles/Server.o.dir/build.make CMakeFiles/Server.o.dir/build
+.PHONY : Server.o/fast
 
 serverApp.o: serverApp.cpp.o
 .PHONY : serverApp.o
 
 # target to build an object file
 serverApp.cpp.o:
-	$(MAKE) -f CMakeFiles/serverApplication.dir/build.make CMakeFiles/serverApplication.dir/serverApp.cpp.o
+	$(MAKE) -f CMakeFiles/Server.o.dir/build.make CMakeFiles/Server.o.dir/serverApp.cpp.o
 .PHONY : serverApp.cpp.o
 
 serverApp.i: serverApp.cpp.i
@@ -124,7 +124,7 @@ serverApp.i: serverApp.cpp.i
 
 # target to preprocess a source file
 serverApp.cpp.i:
-	$(MAKE) -f CMakeFiles/serverApplication.dir/build.make CMakeFiles/serverApplication.dir/serverApp.cpp.i
+	$(MAKE) -f CMakeFiles/Server.o.dir/build.make CMakeFiles/Server.o.dir/serverApp.cpp.i
 .PHONY : serverApp.cpp.i
 
 serverApp.s: serverApp.cpp.s
@@ -132,7 +132,7 @@ serverApp.s: serverApp.cpp.s
 
 # target to generate assembly for a file
 serverApp.cpp.s:
-	$(MAKE) -f CMakeFiles/serverApplication.dir/build.make CMakeFiles/serverApplication.dir/serverApp.cpp.s
+	$(MAKE) -f CMakeFiles/Server.o.dir/build.make CMakeFiles/Server.o.dir/serverApp.cpp.s
 .PHONY : serverApp.cpp.s
 
 # Help Target
@@ -141,9 +141,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... Server.o"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... serverApplication"
 	@echo "... serverApp.o"
 	@echo "... serverApp.i"
 	@echo "... serverApp.s"
