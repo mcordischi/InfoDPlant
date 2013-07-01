@@ -58,5 +58,5 @@ Thumbs.db
 
 # QT properties #
 #################
-.pro
-.pro.user
+*.pro
+*.pro.user
