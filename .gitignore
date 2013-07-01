@@ -55,3 +55,8 @@ Icon?
 ehthumbs.db
 Thumbs.db
 *~
+
+# QT properties #
+#################
+*.pro
+*.pro.user
