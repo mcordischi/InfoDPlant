@@ -13,9 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.VideoView;
+
 
 import com.infodplant.R;
+import com.infodplant.image.AlbumStorageDirFactory;
+import com.infodplant.image.BaseAlbumDirFactory;
+import com.infodplant.image.FroyoAlbumDirFactory;
+import com.infodplant.image.ImageHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,14 +48,18 @@ public class MainActivity extends Activity {
     private static final String JPEG_FILE_SUFFIX = ".jpg";
 
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
+
+    public final ImageHandler imgHandler =
+            new ImageHandler(getString(R.string.app_name),getString(R.string.album_name));
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mImageView = (ImageView) findViewById(R.id.imageView);
-        mImageBitmap = null;
+//        mImageView = (ImageView) findViewById(R.id.imageView);
+//        mImageBitmap = null;
 
 //        Button picBtn = (Button) findViewById(R.id.btnIntend);
 //        setBtnListenerOrDisable(
@@ -175,9 +183,6 @@ public class MainActivity extends Activity {
 		/* Associate the Bitmap to the ImageView */
         mImageView.setImageBitmap(bitmap);
         mImageView.setVisibility(View.VISIBLE);
-
-
-
 
     }
 

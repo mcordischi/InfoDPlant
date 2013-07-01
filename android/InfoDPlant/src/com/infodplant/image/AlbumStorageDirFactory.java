@@ -1,7 +1,7 @@
-package com.infodplant.activity;
+package com.infodplant.image;
 
 import java.io.File;
 
-abstract class AlbumStorageDirFactory {
+public abstract class AlbumStorageDirFactory {
 	public abstract File getAlbumStorageDir(String albumName);
 }

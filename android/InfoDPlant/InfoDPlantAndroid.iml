@@ -11,6 +11,9 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../../tutorials/OpenCV-2.4.6-android-sdk/sdk">
+      <sourceFolder url="file://$MODULE_DIR$/../../../tutorials/OpenCV-2.4.6-android-sdk/sdk/java/src" isTestSource="false" />
+    </content>
     <orderEntry type="jdk" jdkName="Android 4.2.2" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

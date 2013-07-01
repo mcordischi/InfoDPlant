@@ -1,8 +1,9 @@
-package com.infodplant.activity;
+package com.infodplant.image;
 
 import java.io.File;
 
 import android.os.Environment;
+
 
 public final class BaseAlbumDirFactory extends AlbumStorageDirFactory {
 
