@@ -57,7 +57,6 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
 //        mImageView = (ImageView) findViewById(R.id.imageView);
 //        mImageBitmap = null;
 
