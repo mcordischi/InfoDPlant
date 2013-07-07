@@ -60,3 +60,11 @@ Thumbs.db
 #################
 *.pro
 *.pro.user
+
+# VS Stuff #
+############
+*.vcxproj*
+*.sln
+*.suo
+*.sdf
+ipch
