@@ -18,7 +18,10 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
 /**
+ * Previews the camera. When the user taps, the fiter is applied, when s/he double taps, it calls
+ * the PlantInformationActivity with the current picture
  *
+ * Created by marto on 6/30/13.
  */
 public class CameraPreviewActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
     private static final String TAG = "OCVSample::Activity";
