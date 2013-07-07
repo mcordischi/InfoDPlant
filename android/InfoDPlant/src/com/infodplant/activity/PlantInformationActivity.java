@@ -23,7 +23,7 @@ import java.io.IOException;
  *
  * Created by marto on 6/30/13.
  */
-public class MainActivity extends Activity {
+public class PlantInformationActivity extends Activity {
 
     private static final int TAKE_PICTURE_REQUEST = 1 ;
 
@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
      */
     public void prcImage(View view){
     //TODO
-        ImageProcessor imgProc = new ImageProcessor(imgHandler);
+        ImageProcessor imgProc = new ImageProcessor(imgHandler,this);
         imgProc.execute(imgHandler.getPhotoPath());
 
         //Set the button to send image
@@ -129,7 +129,7 @@ public class MainActivity extends Activity {
     }
 
 
-    private void setPic() {
+    public void setPic() {
 
 		/* There isn't enough memory to open up more than a couple camera photos */
 		/* So pre-scale the target bitmap into which the file is decoded */

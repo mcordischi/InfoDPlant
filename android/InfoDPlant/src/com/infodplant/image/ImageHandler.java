@@ -158,6 +158,7 @@ public class ImageHandler {
             FileOutputStream out = new FileOutputStream(mCurrentPhotoPath);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
         } catch (Exception e) {
+            Log.e(appName,"Problem with Overwritting the image");
             e.printStackTrace();
         }
     }
