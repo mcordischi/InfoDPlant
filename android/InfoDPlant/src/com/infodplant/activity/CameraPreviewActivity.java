@@ -3,9 +3,12 @@ package com.infodplant.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -23,7 +26,8 @@ import org.opencv.core.Mat;
  *
  * Created by marto on 6/30/13.
  */
-public class CameraPreviewActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class CameraPreviewActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2,
+        View.OnTouchListener, GestureDetector.OnDoubleTapListener{
     private static final String TAG = "OCVSample::Activity";
 
     private CameraBridgeViewBase mOpenCvCameraView;
@@ -126,12 +130,39 @@ public class CameraPreviewActivity extends Activity implements CameraBridgeViewB
     }
 
     public void onCameraViewStarted(int width, int height) {
+        //TODO
     }
 
     public void onCameraViewStopped() {
+        //TODO
     }
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+        //TODO
         return inputFrame.rgba();
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+        //TODO
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent motionEvent) {
+        //TODO
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+        //TODO
+        return false;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        //TODO
+        return false;
     }
 }
