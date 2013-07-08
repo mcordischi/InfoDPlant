@@ -3,6 +3,7 @@ package com.infodplant.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,11 +14,13 @@ import android.widget.ImageView;
 import com.infodplant.R;
 import com.infodplant.image.ImageHandler;
 import com.infodplant.process.ImageProcessor;
+import com.infodplant.process.ImageSender;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
+ * @deprecated
  * Main Activity of the application. Calls a service to take a photo, uses OpenCV to process it and
  * uses a sender to send it to the server and receive an answer.
  *
@@ -27,6 +30,10 @@ public class PlantInformationActivity extends Activity {
 
     private static final int TAKE_PICTURE_REQUEST = 1 ;
 
+    protected Bitmap bitmap;
+
+    protected ImageSender imgSender;
+
     public final ImageHandler imgHandler =
             new ImageHandler(getString(R.string.app_name),getString(R.string.album_name));
 
@@ -34,6 +41,15 @@ public class PlantInformationActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        byte[] byteArray = getIntent().getByteArrayExtra(SonyTouchActivity.BITMAP_MESSAGE);
+        imgSender = new ImageSender(byteArray,getString(R.string.server_url));
+
+        bitmap = BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length);
+
+        setPic();
+
         setContentView(R.layout.main);
         // Moved to ImageHandler
 
@@ -139,10 +155,7 @@ public class PlantInformationActivity extends Activity {
         int targetW = mImageView.getWidth();
         int targetH = mImageView.getHeight();
 
-		/* Decode the JPEG file into a Bitmap */
-        Bitmap bitmap = imgHandler.getScaledBitmap(targetW, targetH);
-
-		/* Associate the Bitmap to the ImageView */
+	    /* Associate the Bitmap to the ImageView */
         mImageView.setImageBitmap(bitmap);
         mImageView.setVisibility(View.VISIBLE);
 
@@ -156,5 +169,9 @@ public class PlantInformationActivity extends Activity {
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
+
+
+
+
 
 }

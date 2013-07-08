@@ -21,6 +21,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
 /**
+ * @deprecated
  * Previews the camera. When the user taps, the fiter is applied, when s/he double taps, it calls
  * the PlantInformationActivity with the current picture
  *

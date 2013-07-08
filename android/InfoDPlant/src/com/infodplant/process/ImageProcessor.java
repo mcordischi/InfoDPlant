@@ -10,6 +10,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 /**
+ * @deprecated
  * Responsible for processing the image. It runs in background
  * Created by marto on 6/30/13.
  */

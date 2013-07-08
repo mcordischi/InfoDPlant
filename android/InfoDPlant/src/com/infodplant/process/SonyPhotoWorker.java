@@ -58,7 +58,7 @@ public class SonyPhotoWorker implements Runnable {
 
     // The threshold value for the lower and upper color limits
     public static final double THRESHOLD_LOW = 35;
-    public static final double THRESHOLD_HIGH = 35;
+    public static final double THRESHOLD_HIGH = 40;
 
     /**
      * Boolean
@@ -173,11 +173,11 @@ public class SonyPhotoWorker implements Runnable {
             boolean grabbed = mCamera.grab();
             if (grabbed) {
                 // Retrieve the next frame from the camera in RGB format
-                mCamera.retrieve(mCurrentFrame, Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGB);
+                mCamera.retrieve(mCurrentFrame, Highgui.CV_LOAD_IMAGE_GRAYSCALE);
 
                 // Convert the RGB frame to HSV as it is a more appropriate format when calling Core.inRange
-                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameHsv, Imgproc.COLOR_RGB2HSV);
-
+//                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameHsv, Imgproc.COR);
+                mCurrentFrame.copyTo(mCurrentFrameHsv);
                 // If we have selected a new point, get the color range and decide the color range
                 if (mLowerColorLimit == null && mUpperColorLimit == null && mSelectedPoint != null) {
                     double[] selectedColor = mCurrentFrameHsv.get((int) mSelectedPoint.x, (int) mSelectedPoint.y);
@@ -217,20 +217,24 @@ public class SonyPhotoWorker implements Runnable {
                 // If we have selected color, process the current frame using inRange function
                 if (mLowerColorLimit != null && mUpperColorLimit != null) {
                     // Using the color limits to generate a mask (mInRangeResult)
-                    Core.inRange(mCurrentFrameHsv, mLowerColorLimit, mUpperColorLimit, mInRangeResult);
+//                    Core.inRange(mCurrentFrameHsv, mLowerColorLimit, mUpperColorLimit, mInRangeResult);
+                    double threshold = Imgproc.threshold(mCurrentFrame, mInRangeResult, mUpperColorLimit.val[0],
+                            255.0, Imgproc.ADAPTIVE_THRESH_MEAN_C);
                     // Clear (set to black) the filtered image frame
+
+
                     mFilteredFrame.setTo(new Scalar(0, 0, 0));
                     // Copy the current frame in RGB to the filtered frame using the mask.
                     // Only the pixels in the mask will be copied.
-                    mCurrentFrame.copyTo(mFilteredFrame, mInRangeResult);
+//                    mCurrentFrame.copyTo(mFilteredFrame, mInRangeResult);
 
-                    notifyResultCallback(mFilteredFrame);
+                    notifyResultCallback(mInRangeResult);
                 } else {
                     notifyResultCallback(mCurrentFrame);
                 }
 
-                fps = measureFps();
-                notifyFpsResult(fps);
+//                fps = measureFps();
+//                notifyFpsResult(fps);
             }
         }
 
@@ -240,6 +244,15 @@ public class SonyPhotoWorker implements Runnable {
         }
 
     }
+
+    public Bitmap getFiteredImage(){
+        int w = mFilteredFrame.width();
+        int h = mFilteredFrame.height();
+        Bitmap bitmap = Bitmap.createBitmap(w,h, Bitmap.Config.ALPHA_8);
+        Utils.matToBitmap(mFilteredFrame,bitmap);
+        return bitmap;
+    }
+
 
     public double measureFps() {
         mFpsCounter++;

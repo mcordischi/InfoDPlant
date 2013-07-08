@@ -35,6 +35,7 @@ import org.opencv.core.Size;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.*;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,12 +44,19 @@ import android.view.*;
 
 import com.infodplant.process.SonyPhotoWorker;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * @author Erik Hellman <erik.hellman@sonymobile.com>
  */
 public class SonyTouchActivity extends Activity implements SonyPhotoWorker.ResultCallback,
         SurfaceHolder.Callback, View.OnTouchListener, GestureDetector.OnDoubleTapListener {
+
+
     public static final int DRAW_RESULT_BITMAP = 10;
+    public static final String BITMAP_MESSAGE = "Bitmap";
+
+
     private Handler mUiHandler;
     private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceHolder;
@@ -57,6 +65,9 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
     private double mFpsResult;
     private Paint mFpsPaint;
     private GestureDetector mGestureDetector;
+
+
+
 
     /**
      * Called when the activity is first created.
@@ -158,7 +169,20 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
 
     @Override
     public boolean onDoubleTap(MotionEvent event) {
-        mWorker.clearSelectedColor();
+        //Starts a new activity with the plant information
+//        mWorker.clearSelectedColor();
+        mWorker.stopProcessing();
+        Bitmap bitmap = mWorker.getFiteredImage();
+        Intent intent = new Intent(this, PlantInfoActivity.class);
+
+        //Convert to byte array
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+
+        intent.putExtra(BITMAP_MESSAGE,byteArray);
+        startActivity(intent);
         return true;
     }
 

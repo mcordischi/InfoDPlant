@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * @deprecated
  * This class is the responsible for handling an image.
  * It contains all the methods for loading, creating and saving original an image
  * and its processed ones
@@ -135,6 +136,7 @@ public class ImageHandler {
 
 
     /**
+     * @deprecated
      * Loads the image and returns it in Mat Format
      * @return the image
      */
@@ -146,6 +148,7 @@ public class ImageHandler {
     }
 
     /**
+     * @deprecated
      * Overwrites the image
      * @param img the picture to save
      */
