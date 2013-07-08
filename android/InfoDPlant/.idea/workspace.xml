@@ -26,6 +26,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d43c4fa-e752-4296-a90a-0db5136460d2" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java" afterPath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PhotoExample.iws" />
@@ -98,10 +102,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PlantInfoActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PlantInfoActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="0" selection-start="893" selection-end="893" vertical-scroll-proportion="0.69957983" vertical-offset="147" max-vertical-offset="870">
+            <state line="48" column="24" selection-start="1274" selection-end="1274" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1020">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#866#896#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlantInformationActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="150" column="37" selection-start="4679" selection-end="4679" vertical-scroll-proportion="0.0" vertical-offset="1172" max-vertical-offset="2415">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageSender.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="69" column="0" selection-start="2133" selection-end="2133" vertical-scroll-proportion="0.0" vertical-offset="287" max-vertical-offset="2010">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2931#2946#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageHandler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/infodplant/image/ImageHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="22" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.0" vertical-offset="449" max-vertical-offset="2640">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,14 +146,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SonyPhotoWorker.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SonyPhotoWorker.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="250" column="70" selection-start="10516" selection-end="10516" vertical-scroll-proportion="0.0" vertical-offset="3151" max-vertical-offset="4680">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3003#3011#0" expanded="true" />
-              </folding>
+            <state line="226" column="45" selection-start="9695" selection-end="9695" vertical-scroll-proportion="2.0271966" vertical-offset="2256" max-vertical-offset="4530">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -124,7 +158,7 @@
       <file leaf-file-name="AlbumStorageDirFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/infodplant/image/AlbumStorageDirFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="22" selection-start="75" selection-end="75" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
+            <state line="4" column="22" selection-start="75" selection-end="75" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="195">
               <folding />
             </state>
           </provider>
@@ -132,13 +166,13 @@
       </file>
       <file leaf-file-name="plant_info.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/layout/plant_info.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state line="20" column="43" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="525">
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
@@ -169,7 +203,6 @@
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/surface_view.xml" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/PhotoPreviewActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/CameraPreviewActivity.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/image/ImageHandler.java" />
@@ -177,9 +210,10 @@
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/PlantInfo.xml" />
-        <option value="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java" />
+        <option value="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" />
       </list>
     </option>
   </component>
@@ -236,16 +270,6 @@
     <panes>
       <pane id="PackagesPane">
         <subPane />
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
       </pane>
       <pane id="ProjectPane">
         <subPane>
@@ -411,22 +435,32 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="139" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="141" />
-    <property name="OverrideImplement.combined" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
     <property name="project.structure.proportion" value="0.15" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="141" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="recentsLimit" value="5" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="139" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Pictures" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="145" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="939" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="939" />
@@ -437,17 +471,17 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Celuchoto" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/src/com/infodplant/image" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/com/infodplant/image" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="settings.github" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -615,6 +649,7 @@
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <option name="FORCE_UPDATE" value="false" />
     <option name="IGNORE_EXTERNALS" value="false" />
+    <configuration useDefault="true">$USER_HOME$/.subversion</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
@@ -659,7 +694,11 @@
       <created>1373248705975</created>
       <updated>1373248705975</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Basic Flow working. Next step: send the picture">
+      <created>1373248958284</created>
+      <updated>1373248958284</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -686,16 +725,16 @@
     <frame x="1279" y="-4" width="1442" height="905" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3294964" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="1529" y="155" width="952" height="479" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32669324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22302158" sideWeight="0.51660025" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3989432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32802126" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32802126" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32802126" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31474105" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48339975" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -703,13 +742,13 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24748202" sideWeight="0.6746348" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.6746348" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26043165" sideWeight="0.6719788" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32536522" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3294964" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="1529" y="155" width="952" height="479" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26043165" sideWeight="0.6746348" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32536522" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964029" sideWeight="0.6746348" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -718,12 +757,12 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771823" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33884892" sideWeight="0.6830015" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32618684" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32618684" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -812,37 +851,18 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/res/layout/surface_view.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="949" selection-end="949" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="465">
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.0" vertical-offset="318" max-vertical-offset="960">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1309#1324#0" expanded="true" />
-          </folding>
+        <state line="25" column="0" selection-start="949" selection-end="949" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="465">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/lang/Thread.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="148" column="0" selection-start="5233" selection-end="5233" vertical-scroll-proportion="1.0" vertical-offset="1859" max-vertical-offset="2295" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/image/ImageHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="14" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2640">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/ImageProcessor.java">
@@ -880,41 +900,22 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="9" selection-start="911" selection-end="911" vertical-scroll-proportion="0.64841497" vertical-offset="0" max-vertical-offset="694">
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/plant_info.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="0" selection-start="4540" selection-end="4540" vertical-scroll-proportion="0.26056337" vertical-offset="1660" max-vertical-offset="2415">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/plant_info.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="43" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="525">
           <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="17" selection-start="898" selection-end="898" vertical-scroll-proportion="0.75208914" vertical-offset="135" max-vertical-offset="960">
-          <folding>
-            <element signature="e#342#360#0" expanded="true" />
-            <element signature="e#601#619#0" expanded="true" />
-            <element signature="e#861#879#0" expanded="true" />
-            <element signature="e#1138#1156#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -930,22 +931,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java">
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="250" column="70" selection-start="10516" selection-end="10516" vertical-scroll-proportion="0.0" vertical-offset="3151" max-vertical-offset="4680">
+        <state line="48" column="24" selection-start="1274" selection-end="1274" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="1020">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3003#3011#0" expanded="true" />
+            <element signature="e#866#896#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/image/ImageHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="893" selection-end="893" vertical-scroll-proportion="0.69957983" vertical-offset="147" max-vertical-offset="870">
+        <state line="38" column="22" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.0" vertical-offset="449" max-vertical-offset="2640">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="0" selection-start="2133" selection-end="2133" vertical-scroll-proportion="0.0" vertical-offset="287" max-vertical-offset="2010">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2931#2946#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="0" selection-start="1796" selection-end="1796" vertical-scroll-proportion="0.0" vertical-offset="482" max-vertical-offset="960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="150" column="37" selection-start="4679" selection-end="4679" vertical-scroll-proportion="0.0" vertical-offset="1172" max-vertical-offset="2415">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="226" column="45" selection-start="9695" selection-end="9695" vertical-scroll-proportion="2.0271966" vertical-offset="2256" max-vertical-offset="4530">
+          <folding />
         </state>
       </provider>
     </entry>

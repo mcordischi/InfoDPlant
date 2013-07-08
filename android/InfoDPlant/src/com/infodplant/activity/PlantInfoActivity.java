@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -27,7 +29,15 @@ public class PlantInfoActivity extends Activity {
         Intent intent = getIntent();
         byte[] byteArray = intent.getByteArrayExtra(SonyTouchActivity.BITMAP_MESSAGE);
         bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
- //       imgSender = new ImageSender(byteArray,getString(R.string.server_url));
+        imgSender = new ImageSender(byteArray,getString(R.string.server_url));
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            //Execute in parallel
+            imgSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://url.com/image.png");
+        }else
+            imgSender.execute();
+
 
         setContentView(R.layout.plant_info);
 

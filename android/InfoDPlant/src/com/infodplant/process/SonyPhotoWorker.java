@@ -175,6 +175,7 @@ public class SonyPhotoWorker implements Runnable {
                 // Retrieve the next frame from the camera in RGB format
                 mCamera.retrieve(mCurrentFrame, Highgui.CV_LOAD_IMAGE_GRAYSCALE);
 
+
                 // Convert the RGB frame to HSV as it is a more appropriate format when calling Core.inRange
 //                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameGray, Imgproc.COR);
                 mCurrentFrame.copyTo(mCurrentFrameGray);
@@ -219,7 +220,7 @@ public class SonyPhotoWorker implements Runnable {
                     // Using the color limits to generate a mask (mInRangeResult)
 //                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mInRangeResult);
                     double threshold = Imgproc.threshold(mCurrentFrame, mInRangeResult, mUpperColorLimit.val[0],
-                            255.0, Imgproc.ADAPTIVE_THRESH_MEAN_C);
+                            255.0, Imgproc.THRESH_BINARY);
                     // Clear (set to black) the filtered image frame
 
 
