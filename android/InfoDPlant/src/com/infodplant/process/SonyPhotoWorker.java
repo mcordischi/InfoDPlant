@@ -76,7 +76,7 @@ public class SonyPhotoWorker implements Runnable {
     private Mat mCurrentFrame;
     private Mat mFilteredFrame;
     private Mat mInRangeResult;
-    private Mat mCurrentFrameHsv;
+    private Mat mCurrentFrameGray;
 
     private int mFpsCounter;
     private double mFpsFrequency;
@@ -140,7 +140,7 @@ public class SonyPhotoWorker implements Runnable {
      */
     private void initMatrices() {
         mCurrentFrame = new Mat();
-        mCurrentFrameHsv = new Mat();
+        mCurrentFrameGray = new Mat();
         mFilteredFrame = new Mat();
         mInRangeResult = new Mat();
 
@@ -176,11 +176,11 @@ public class SonyPhotoWorker implements Runnable {
                 mCamera.retrieve(mCurrentFrame, Highgui.CV_LOAD_IMAGE_GRAYSCALE);
 
                 // Convert the RGB frame to HSV as it is a more appropriate format when calling Core.inRange
-//                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameHsv, Imgproc.COR);
-                mCurrentFrame.copyTo(mCurrentFrameHsv);
+//                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameGray, Imgproc.COR);
+                mCurrentFrame.copyTo(mCurrentFrameGray);
                 // If we have selected a new point, get the color range and decide the color range
                 if (mLowerColorLimit == null && mUpperColorLimit == null && mSelectedPoint != null) {
-                    double[] selectedColor = mCurrentFrameHsv.get((int) mSelectedPoint.x, (int) mSelectedPoint.y);
+                    double[] selectedColor = mCurrentFrameGray.get((int) mSelectedPoint.x, (int) mSelectedPoint.y);
 
                     // We check the colors in a 5x5 pixels square (Region Of Interest) and get the average from that
                     if (mSelectedPoint.x < 2) {
@@ -198,7 +198,7 @@ public class SonyPhotoWorker implements Runnable {
                     // This will reduce the risk of getting "freak" values if the pixel where we clicked has an unexpected value
                     Rect roiRect = new Rect((int) (mSelectedPoint.x - 2), (int) (mSelectedPoint.y - 2), 5, 5);
                     // Get the Matrix representing the ROI
-                    Mat roi = mCurrentFrameHsv.submat(roiRect);
+                    Mat roi = mCurrentFrameGray.submat(roiRect);
                     // Calculate the mean value of the the ROI matrix
                     Scalar sumColor = Core.mean(roi);
                     double[] sumColorValues = sumColor.val;
@@ -217,13 +217,13 @@ public class SonyPhotoWorker implements Runnable {
                 // If we have selected color, process the current frame using inRange function
                 if (mLowerColorLimit != null && mUpperColorLimit != null) {
                     // Using the color limits to generate a mask (mInRangeResult)
-//                    Core.inRange(mCurrentFrameHsv, mLowerColorLimit, mUpperColorLimit, mInRangeResult);
+//                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mInRangeResult);
                     double threshold = Imgproc.threshold(mCurrentFrame, mInRangeResult, mUpperColorLimit.val[0],
                             255.0, Imgproc.ADAPTIVE_THRESH_MEAN_C);
                     // Clear (set to black) the filtered image frame
 
 
-                    mFilteredFrame.setTo(new Scalar(0, 0, 0));
+//                    mFilteredFrame.setTo(new Scalar(0, 0, 0));
                     // Copy the current frame in RGB to the filtered frame using the mask.
                     // Only the pixels in the mask will be copied.
 //                    mCurrentFrame.copyTo(mFilteredFrame, mInRangeResult);
@@ -246,10 +246,10 @@ public class SonyPhotoWorker implements Runnable {
     }
 
     public Bitmap getFiteredImage(){
-        int w = mFilteredFrame.width();
-        int h = mFilteredFrame.height();
-        Bitmap bitmap = Bitmap.createBitmap(w,h, Bitmap.Config.ALPHA_8);
-        Utils.matToBitmap(mFilteredFrame,bitmap);
+        int w = mInRangeResult.width();
+        int h = mInRangeResult.height();
+        Bitmap bitmap = Bitmap.createBitmap(w,h, Bitmap.Config.RGB_565);
+        Utils.matToBitmap(mInRangeResult,bitmap);
         return bitmap;
     }
 

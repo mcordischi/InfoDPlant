@@ -36,20 +36,16 @@ public class PlantInfoActivity extends Activity {
 
     @Override
     public void onStart(){
+        super.onStart();
         setPic();
     }
 
 
+    /**
+     *  Associates the bitmap to the ImageView
+     */
     public void setPic() {
-		/* There isn't enough memory to open up more than a couple camera photos */
-		/* So pre-scale the target bitmap into which the file is decoded */
-
         ImageView mImageView = (ImageView) findViewById(R.id.imageView);
-		/* Get the size of the ImageView */
-        int targetW = mImageView.getWidth();
-        int targetH = mImageView.getHeight();
-
-	    /* Associate the Bitmap to the ImageView */
         mImageView.setImageBitmap(bitmap);
     }
 
