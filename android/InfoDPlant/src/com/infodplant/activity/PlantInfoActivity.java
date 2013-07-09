@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.infodplant.R;
 import com.infodplant.process.ImageSender;
 
+import org.opencv.core.Point;
+
 /**
  * Created by marto on 7/7/13.
  */
@@ -31,6 +33,8 @@ public class PlantInfoActivity extends Activity {
         bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         imgSender = new ImageSender(byteArray,getString(R.string.server_url));
 
+//        //Sets a contour in the ImageSender
+//        imgSender.setContour((Point[]) intent.getSerializableExtra(SonyTouchActivity.CONTOUR_MESSAGE));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             //Execute in parallel

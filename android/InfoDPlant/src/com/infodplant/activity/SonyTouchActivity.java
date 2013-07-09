@@ -32,6 +32,7 @@ import org.opencv.android.InstallCallbackInterface;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Size;
+import org.opencv.core.Point;
 
 import android.app.Activity;
 import android.content.Context;
@@ -45,6 +46,7 @@ import android.view.*;
 import com.infodplant.process.SonyPhotoWorker;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 /**
  * @author Erik Hellman <erik.hellman@sonymobile.com>
@@ -55,6 +57,7 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
 
     public static final int DRAW_RESULT_BITMAP = 10;
     public static final String BITMAP_MESSAGE = "Bitmap";
+    public static final String CONTOUR_MESSAGE = "contour";
 
 
     private Handler mUiHandler;
@@ -62,7 +65,6 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
     private SurfaceHolder mSurfaceHolder;
     private Rect mSurfaceSize;
     private SonyPhotoWorker mWorker;
-    private double mFpsResult;
     private Paint mFpsPaint;
     private GestureDetector mGestureDetector;
 
@@ -122,10 +124,6 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
         mUiHandler.obtainMessage(DRAW_RESULT_BITMAP, resultBitmap).sendToTarget();
     }
 
-    @Override
-    public void onFpsUpdate(double fps) {
-        mFpsResult = fps;
-    }
 
     private void initCameraView() {
         mWorker = new SonyPhotoWorker(SonyPhotoWorker.FIRST_CAMERA);
@@ -172,16 +170,22 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
         //Starts a new activity with the plant information
 //        mWorker.clearSelectedColor();
         mWorker.stopProcessing();
-        Bitmap bitmap = mWorker.getFiteredImage();
+        Bitmap bitmap = mWorker.getOriginalImage();
         Intent intent = new Intent(this, PlantInfoActivity.class);
 
         //Convert to byte array
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-
-
         intent.putExtra(BITMAP_MESSAGE,byteArray);
+
+        //Add the list of points
+        //TODO Point not serializable
+        List<Point> contour = mWorker.getContour();
+        Object[] c = contour.toArray();
+        intent.putExtra(CONTOUR_MESSAGE,c);
+
+
         startActivity(intent);
         return true;
     }
@@ -228,8 +232,8 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
                 try {
                     canvas = mSurfaceHolder.lockCanvas();
                     canvas.drawBitmap(resultBitmap, null, mSurfaceSize, null);
-                    canvas.drawText(String.format("FPS: %.2f", mFpsResult), 35, 45, mFpsPaint);
-                    String msg = "Single tap to select color. Double-tap to clear selection.";
+//                    canvas.drawText(String.format("FPS: %.2f", mFpsResult), 35, 45, mFpsPaint);
+                    String msg = "Double-tap to set threshold value";
                     float width = mFpsPaint.measureText(msg);
                     canvas.drawText(msg, mSurfaceView.getWidth() / 2 - width / 2,
                             mSurfaceView.getHeight() - 30, mFpsPaint);

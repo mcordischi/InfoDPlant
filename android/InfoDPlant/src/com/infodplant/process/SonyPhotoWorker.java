@@ -34,6 +34,8 @@ import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 
 import android.graphics.Bitmap;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -51,21 +53,25 @@ public class SonyPhotoWorker implements Runnable {
 
     public static final int RESULT_MATRIX_BUFFER_SIZE = 3;
 
-    /**
-     * Constant used to calculate FPS value (see measureFps())
-     */
-    public static final int FPS_STEPS = 20;
 
-    // The threshold value for the lower and upper color limits
-    public static final double THRESHOLD_LOW = 35;
-    public static final double THRESHOLD_HIGH = 40;
+    // The max threshold value accepted
+    public static final double THRESHOLD_HIGH_LIMIT = 235;
+    // Increasing the threshold
+    public static final double THRESHOLD_UPPER_BOUND = 120;
+
+    //Threshold BaseLine
+    private double thresh = 999999;
+
+    // Preview size
+    private static int PREVIEW_WIDTH = 480;
+    private static int PREVIEW_HEIGHT = 320;
+    private Size mPreviewSize;
 
     /**
      * Boolean
      */
     private boolean mDoProcess;
     private int mCameraId = SECOND_CAMERA;
-    private Size mPreviewSize;
     private VideoCapture mCamera;
     private Set<ResultCallback> mResultCallbacks = Collections.synchronizedSet(new HashSet<ResultCallback>());
     private ConcurrentLinkedQueue<Bitmap> mResultBitmaps = new ConcurrentLinkedQueue<Bitmap>();
@@ -75,13 +81,12 @@ public class SonyPhotoWorker implements Runnable {
      */
     private Mat mCurrentFrame;
     private Mat mFilteredFrame;
-    private Mat mInRangeResult;
+    private Mat mThreshFrameResult;
     private Mat mCurrentFrameGray;
 
-    private int mFpsCounter;
-    private double mFpsFrequency;
     private long mPrevFrameTime;
-    private double mPreviousFps;
+
+
 
     private Point mSelectedPoint = null;
 
@@ -91,7 +96,7 @@ public class SonyPhotoWorker implements Runnable {
     public SonyPhotoWorker(int cameraId) {
         mCameraId = cameraId;
         // Default preview size
-        mPreviewSize = new Size(480, 320);
+        mPreviewSize = new Size(PREVIEW_WIDTH, PREVIEW_HEIGHT);
     }
 
     public void releaseResultBitmap(Bitmap bitmap) {
@@ -140,9 +145,9 @@ public class SonyPhotoWorker implements Runnable {
      */
     private void initMatrices() {
         mCurrentFrame = new Mat();
-        mCurrentFrameGray = new Mat();
+        mCurrentFrameGray = new Mat(PREVIEW_WIDTH, PREVIEW_HEIGHT,CvType.CV_8SC1);
         mFilteredFrame = new Mat();
-        mInRangeResult = new Mat();
+        mThreshFrameResult = new Mat(PREVIEW_WIDTH, PREVIEW_HEIGHT,CvType.CV_8SC1);
 
         // Since drawing to screen occurs on a different thread than the processing,
         // we use a queue to handle the bitmaps we will draw to screen
@@ -161,8 +166,6 @@ public class SonyPhotoWorker implements Runnable {
     public void run() {
         mDoProcess = true;
         Rect previewRect = new Rect(0, 0, (int) mPreviewSize.width, (int) mPreviewSize.height);
-        double fps;
-        mFpsFrequency = Core.getTickFrequency();
         mPrevFrameTime = Core.getTickCount();
 
         setupCamera();
@@ -172,16 +175,17 @@ public class SonyPhotoWorker implements Runnable {
         while (mDoProcess && mCamera != null) {
             boolean grabbed = mCamera.grab();
             if (grabbed) {
+
                 // Retrieve the next frame from the camera in RGB format
-                mCamera.retrieve(mCurrentFrame, Highgui.CV_LOAD_IMAGE_GRAYSCALE);
+                mCamera.retrieve(mCurrentFrame, Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGB);
 
 
                 // Convert the RGB frame to HSV as it is a more appropriate format when calling Core.inRange
-//                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameGray, Imgproc.COR);
-                mCurrentFrame.copyTo(mCurrentFrameGray);
-                // If we have selected a new point, get the color range and decide the color range
-                if (mLowerColorLimit == null && mUpperColorLimit == null && mSelectedPoint != null) {
-                    double[] selectedColor = mCurrentFrameGray.get((int) mSelectedPoint.x, (int) mSelectedPoint.y);
+                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameGray, Imgproc.COLOR_RGB2GRAY);
+                //mCurrentFrame.copyTo(mCurrentFrameGray);
+
+                // If we have selected a new point, get the color range and decide new threshold
+                if (mSelectedPoint != null) {
 
                     // We check the colors in a 5x5 pixels square (Region Of Interest) and get the average from that
                     if (mSelectedPoint.x < 2) {
@@ -200,26 +204,15 @@ public class SonyPhotoWorker implements Runnable {
                     Rect roiRect = new Rect((int) (mSelectedPoint.x - 2), (int) (mSelectedPoint.y - 2), 5, 5);
                     // Get the Matrix representing the ROI
                     Mat roi = mCurrentFrameGray.submat(roiRect);
-                    // Calculate the mean value of the the ROI matrix
-                    Scalar sumColor = Core.mean(roi);
-                    double[] sumColorValues = sumColor.val;
-
-                    // Decide on the color range based on the mean value from the ROI
-                    if (selectedColor != null) {
-                        mLowerColorLimit = new Scalar(sumColorValues[0] - THRESHOLD_LOW * 3,
-                                sumColorValues[1] - THRESHOLD_LOW,
-                                sumColorValues[2] - THRESHOLD_LOW);
-                        mUpperColorLimit = new Scalar(sumColorValues[0] + THRESHOLD_HIGH * 3,
-                                sumColorValues[1] + THRESHOLD_HIGH,
-                                sumColorValues[2] + THRESHOLD_HIGH);
-                    }
+                    changeThresholdValue(roi);
+                    mSelectedPoint = null;
                 }
 
-                // If we have selected color, process the current frame using inRange function
-                if (mLowerColorLimit != null && mUpperColorLimit != null) {
-                    // Using the color limits to generate a mask (mInRangeResult)
-//                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mInRangeResult);
-                    double threshold = Imgproc.threshold(mCurrentFrame, mInRangeResult, mUpperColorLimit.val[0],
+                // If we have selected thresh, apply the threshold
+                if (thresh < THRESHOLD_HIGH_LIMIT) {
+                    // Using the color limits to generate a mask (mThreshFrameResult)
+//                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mThreshFrameResult);
+                    double threshold = Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh,
                             255.0, Imgproc.THRESH_BINARY);
                     // Clear (set to black) the filtered image frame
 
@@ -227,9 +220,9 @@ public class SonyPhotoWorker implements Runnable {
 //                    mFilteredFrame.setTo(new Scalar(0, 0, 0));
                     // Copy the current frame in RGB to the filtered frame using the mask.
                     // Only the pixels in the mask will be copied.
-//                    mCurrentFrame.copyTo(mFilteredFrame, mInRangeResult);
+//                    mCurrentFrame.copyTo(mFilteredFrame, mThreshFrameResult);
 
-                    notifyResultCallback(mInRangeResult);
+                    notifyResultCallback(mThreshFrameResult);
                 } else {
                     notifyResultCallback(mCurrentFrame);
                 }
@@ -246,32 +239,72 @@ public class SonyPhotoWorker implements Runnable {
 
     }
 
+
+    /**
+     * Changes the Threshold base line. More information in
+     * http://docs.opencv.org/doc/tutorials/imgproc/threshold/threshold.html
+     * @param roi the region of interest. The thresh value will be the mean of the roi, minus a constant
+     */
+    private void changeThresholdValue(Mat roi){
+        // Calculate the mean value of the the ROI matrix
+        Scalar sumColor = Core.mean(roi);
+        double[] sumColorValues = sumColor.val;
+
+//        Dunno why selsectedColor is used, So I commented it. If it doesn't work, revive this code
+//        double[] selectedColor = mCurrentFrameGray.get((int) mSelectedPoint.x, (int) mSelectedPoint.y);
+//        if (selectedColor != null) {
+
+        //use channel 1
+        thresh = sumColorValues[0] + THRESHOLD_UPPER_BOUND;
+    }
+
+
+    /**
+     * @deprecated Why would you use the filtered image if you can get the contours? Call  {@link #getContour()}!
+     * Returns the filtered Image in bitmap format
+     * @return the image
+     */
     public Bitmap getFiteredImage(){
-        int w = mInRangeResult.width();
-        int h = mInRangeResult.height();
-        Bitmap bitmap = Bitmap.createBitmap(w,h, Bitmap.Config.RGB_565);
-        Utils.matToBitmap(mInRangeResult,bitmap);
+        int w = mThreshFrameResult.width();
+        int h = mThreshFrameResult.height();
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ALPHA_8);
+        Utils.matToBitmap(mThreshFrameResult,bitmap);
+        return bitmap;
+    }
+
+    public Bitmap getOriginalImage(){
+        int w = mCurrentFrame.width();
+        int h = mCurrentFrame.height();
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(mCurrentFrame,bitmap);
         return bitmap;
     }
 
 
-    public double measureFps() {
-        mFpsCounter++;
-        if (mFpsCounter % FPS_STEPS == 0) {
-            long time = Core.getTickCount();
-            double fps = FPS_STEPS * mFpsFrequency / (time - mPrevFrameTime);
-            mPrevFrameTime = time;
-            mPreviousFps = fps;
+    /**
+     * Analize the filtered image's contour.
+     * @return the biggest contour
+     */
+    public List<Point> getContour(){
+        ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Mat mat = new Mat();
+        Imgproc.findContours(mThreshFrameResult,contours,mat, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+        double maxArea = -1;
+        int maxAreaIdx = -1;
+        for (int idx = 0; idx < contours.size(); idx++) {
+            Mat contour = contours.get(idx);
+            double contourArea = Imgproc.contourArea(contour);
+            if (contourArea > maxArea) {
+                maxArea = contourArea;
+                maxAreaIdx = idx;
+            }
         }
-        return mPreviousFps;
+
+        return contours.get(maxAreaIdx).toList();
     }
 
 
-    private void notifyFpsResult(double fps) {
-        for (ResultCallback resultCallback : mResultCallbacks) {
-            resultCallback.onFpsUpdate(fps);
-        }
-    }
+
 
     private void notifyResultCallback(Mat result) {
         Bitmap resultBitmap = mResultBitmaps.poll();
@@ -284,14 +317,14 @@ public class SonyPhotoWorker implements Runnable {
     }
 
     public void setSelectedPoint(double x, double y) {
-        mLowerColorLimit = null;
-        mUpperColorLimit = null;
         mSelectedPoint = new Point(x, y);
     }
 
+    /**
+     * Resets the thresh value
+     */
     public void clearSelectedColor() {
-        mLowerColorLimit = null;
-        mUpperColorLimit = null;
+        thresh = 99999 ;
         mSelectedPoint = null;
     }
 
@@ -301,7 +334,5 @@ public class SonyPhotoWorker implements Runnable {
 
     public interface ResultCallback {
         void onResultMatrixReady(Bitmap mat);
-
-        void onFpsUpdate(double fps);
     }
 }
