@@ -7,7 +7,7 @@
     <string name="sendImage">Compare Image</string>
     <string name="album_name">infoDPlant</string>
     <string name="server_url">www.lalala.com/sendImage</string>
-
+    <string name="wikipedia_entry_url">http://en.m.wikipedia.org/wiki/</string>
     <string name="plant_name">Retrieving</string><string name="take_picture">Take another pic</string>
     <string name="take_pic">Take another pic</string>
 </resources>

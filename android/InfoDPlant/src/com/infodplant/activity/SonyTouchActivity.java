@@ -28,11 +28,9 @@ package com.infodplant.activity;
  */
 
 import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.InstallCallbackInterface;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Size;
-import org.opencv.core.Point;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,7 +44,6 @@ import android.view.*;
 import com.infodplant.process.SonyPhotoWorker;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 /**
  * @author Erik Hellman <erik.hellman@sonymobile.com>
@@ -56,8 +53,9 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
 
 
     public static final int DRAW_RESULT_BITMAP = 10;
-    public static final String BITMAP_MESSAGE = "Bitmap";
-    public static final String CONTOUR_MESSAGE = "contour";
+    public static final String BITMAP_MESSAGE = "B";
+    public static final String CONTOUR_MESSAGE = "C";
+    public static final String CONTOUR_IMG_MESSAGE = "CIM";
 
 
     private Handler mUiHandler;
@@ -170,20 +168,25 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
         //Starts a new activity with the plant information
 //        mWorker.clearSelectedColor();
         mWorker.stopProcessing();
-        Bitmap bitmap = mWorker.getOriginalImage();
+
         Intent intent = new Intent(this, PlantInfoActivity.class);
 
-        //Convert to byte array
+
+//        //Convert to byte array
+        Bitmap bitmap = mWorker.getOriginalImage();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
         intent.putExtra(BITMAP_MESSAGE,byteArray);
 
-        //Add the list of points
-        //TODO Point not serializable
-        List<Point> contour = mWorker.getContour();
-        Object[] c = contour.toArray();
-        intent.putExtra(CONTOUR_MESSAGE,c);
+//        //Add the list of points
+//        //ERROR: Point not serializable :\
+//        Bitmap contoursBitmap = mWorker.getContourImage();
+//        intent.putExtra(CONTOUR_IMG_MESSAGE,contoursBitmap);
+
+//        List<Point> contour = mWorker.getContour();
+//        Object[] c = contour.toArray();
+//        intent.putExtra(CONTOUR_MESSAGE,c);
 
 
         startActivity(intent);

@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.infodplant.R;
 import com.infodplant.image.ImageHandler;
@@ -41,40 +42,40 @@ public class PlantInformationActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        byte[] byteArray = getIntent().getByteArrayExtra(SonyTouchActivity.BITMAP_MESSAGE);
-        imgSender = new ImageSender(byteArray,getString(R.string.server_url));
-
-        bitmap = BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length);
-
-        setPic();
-
-        setContentView(R.layout.main);
-        // Moved to ImageHandler
-
-//        mImageView = (ImageView) findViewById(R.id.imageView);
-//        mImageBitmap = null;
-
-//        Button picBtn = (Button) findViewById(R.id.btnIntend);
-//        setBtnListenerOrDisable(
-//                picBtn,
-//                mTakePicOnClickListener,
-//                MediaStore.ACTION_IMAGE_CAPTURE
-//        );
 //
-//        Button picSBtn = (Button) findViewById(R.id.btnIntendS);
-//        setBtnListenerOrDisable(
-//                picSBtn,
-//                mTakePicSOnClickListener,
-//                MediaStore.ACTION_IMAGE_CAPTURE
-//        );
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-//            mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
-//        } else {
-//            mAlbumStorageDirFactory = new BaseAlbumDirFactory();
-//        }
+//        Intent intent = getIntent();
+//        byte[] byteArray = getIntent().getByteArrayExtra(SonyTouchActivity.BITMAP_MESSAGE);
+//        imgSender = new ImageSender(,getString(R.string.server_url));
+//
+//        bitmap = BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length);
+//
+//        setPic();
+//
+//        setContentView(R.layout.main);
+//        // Moved to ImageHandler
+//
+////        mImageView = (ImageView) findViewById(R.id.imageView);
+////        mImageBitmap = null;
+//
+////        Button picBtn = (Button) findViewById(R.id.btnIntend);
+////        setBtnListenerOrDisable(
+////                picBtn,
+////                mTakePicOnClickListener,
+////                MediaStore.ACTION_IMAGE_CAPTURE
+////        );
+////
+////        Button picSBtn = (Button) findViewById(R.id.btnIntendS);
+////        setBtnListenerOrDisable(
+////                picSBtn,
+////                mTakePicSOnClickListener,
+////                MediaStore.ACTION_IMAGE_CAPTURE
+////        );
+//
+////        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+////            mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
+////        } else {
+////            mAlbumStorageDirFactory = new BaseAlbumDirFactory();
+////        }
     }
 
 

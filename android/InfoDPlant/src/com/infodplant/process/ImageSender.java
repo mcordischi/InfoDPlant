@@ -1,13 +1,20 @@
 package com.infodplant.process;
 
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Pair;
+import android.view.View;
+import android.widget.TextView;
 
+import com.infodplant.activity.PlantInfoActivity;
 import com.infodplant.image.AlbumStorageDirFactory;
 
 import org.apache.http.HttpResponse;
@@ -42,36 +49,55 @@ import java.util.List;
 
 /**
  * Sends the processed picture to the server, returns the callback from the server (the result).
+ * The result is a Pair of Strings. The first is the Specie of the leaf, the second one is the
+ * wikipedia entry
  * Created by marto on 6/30/13.
  */
-public class ImageSender extends AsyncTask<String, Void, String>{
+public class ImageSender extends AsyncTask<String, Void, Pair<String,String>>{
     //TODO Use a ProgressValue
 
     byte[] byteArray;
     Point[] contour;
     String url;
+
     DefaultHttpClient client;
+    PlantInfoActivity requester;
 
     public static String appName = "InfoDPlant";
 
-    public ImageSender(byte[] byteArray, String url){
-        //TODO take away byteArray from the constructor
-        this.byteArray = byteArray;
+    public ImageSender(PlantInfoActivity requester,String url){
+        this.requester = requester;
         this.url = url;
         DefaultHttpClient client = new DefaultHttpClient();
     }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected Pair<String,String> doInBackground(String... strings) {
+        Pair<String,String> result;
         //TODO send compressed image to server, wait for a answer.
-        saveBitmap();
+//        saveBitmap();
 //        sendImage();
-//        return getResponse();
-        return null;
+//        result = getResponse();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        result = new Pair<String, String>("Done","Potus");
+        return result;
     }
 
     /**
+     * Sets the plant name. TODO, add the wikipedia link
+     * @param result the plant name
+     */
+    @Override
+    protected void onPostExecute(Pair<String,String> result){
+        requester.setPlantInformation(result);
+    }
+    /**
      * Saves the contour to a file, if there is no contour, saves the image
+     * TODO sendit to SonyPhotoWorker
      */
     protected void saveBitmap(){
         Bitmap bitmap;
@@ -83,7 +109,8 @@ public class ImageSender extends AsyncTask<String, Void, String>{
             matOfPoint.fromArray(contour);
             List<MatOfPoint> matOfPointList = new ArrayList<MatOfPoint>(1);
             matOfPointList.add(matOfPoint);
-            Imgproc.drawContours(img,matOfPointList,-1,new Scalar(0,0,0));
+            //Thickness<0 => draws the area bounded by the contours
+            Imgproc.drawContours(img,matOfPointList,-1,new Scalar(255,255,255),-1);
 
             int w = img.width();
             int h = img.height();
@@ -92,6 +119,7 @@ public class ImageSender extends AsyncTask<String, Void, String>{
             fileName = "ContourImage.png";
         }
         else{
+            //There is a bitmap
             bitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
             fileName = "Image.png";
         }
@@ -178,6 +206,8 @@ public class ImageSender extends AsyncTask<String, Void, String>{
     public void setContour(Point[] contour){
         this.contour = contour;
     }
+
+
 
     /**
      * Adds a bitmap in a byte array format

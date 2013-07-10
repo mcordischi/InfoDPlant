@@ -272,6 +272,29 @@ public class SonyPhotoWorker implements Runnable {
         return bitmap;
     }
 
+    /**
+     * Why get a bitmap instead of the List of points? Opencv's Point isw not serializable =(
+     * Now you have 2 choices. Get the contour as a List of points with {@link #getContour()} and
+     * serialize it in your own way, or take the list of poits as a image this this method.
+     * @return A bitmap with the contour
+     */
+    public Bitmap getContourImage(){
+        int w = PREVIEW_WIDTH;
+        int h = PREVIEW_HEIGHT;
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
+        List<Point> contour = getContour();
+        //Ugly code thanks to Openc - Handles disgusting classes
+        List<MatOfPoint> contoursUgly = new ArrayList<MatOfPoint>(1);
+        MatOfPoint matOfPoint = new MatOfPoint();
+        matOfPoint.fromList(contour);
+        contoursUgly.add(matOfPoint);
+
+        Mat img = new Mat(PREVIEW_WIDTH, PREVIEW_HEIGHT,CvType.CV_8SC1);
+        Imgproc.drawContours(img,contoursUgly,-1,new Scalar(255,255,255));
+        Utils.matToBitmap(img,bitmap);
+        return bitmap;
+    }
+
     public Bitmap getOriginalImage(){
         int w = mCurrentFrame.width();
         int h = mCurrentFrame.height();
@@ -302,8 +325,6 @@ public class SonyPhotoWorker implements Runnable {
 
         return contours.get(maxAreaIdx).toList();
     }
-
-
 
 
     private void notifyResultCallback(Mat result) {
