@@ -41,6 +41,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.*;
 
+import com.infodplant.R;
 import com.infodplant.process.SonyPhotoWorker;
 
 import java.io.ByteArrayOutputStream;
@@ -84,7 +85,7 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
         mFpsPaint.setColor(Color.GREEN);
         mFpsPaint.setDither(true);
         mFpsPaint.setFlags(Paint.SUBPIXEL_TEXT_FLAG);
-        mFpsPaint.setTextSize(48);
+        mFpsPaint.setTextSize(24);
         mFpsPaint.setTypeface(Typeface.SANS_SERIF);
 
         mSurfaceView = new SurfaceView(this);
@@ -236,7 +237,7 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
                     canvas = mSurfaceHolder.lockCanvas();
                     canvas.drawBitmap(resultBitmap, null, mSurfaceSize, null);
 //                    canvas.drawText(String.format("FPS: %.2f", mFpsResult), 35, 45, mFpsPaint);
-                    String msg = "Double-tap to set threshold value";
+                    String msg = getString(R.string.surface_text);
                     float width = mFpsPaint.measureText(msg);
                     canvas.drawText(msg, mSurfaceView.getWidth() / 2 - width / 2,
                             mSurfaceView.getHeight() - 30, mFpsPaint);

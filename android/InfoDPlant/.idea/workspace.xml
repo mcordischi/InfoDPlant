@@ -31,15 +31,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d43c4fa-e752-4296-a90a-0db5136460d2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java" afterPath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java" afterPath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java" afterPath="$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/plant_info.xml" afterPath="$PROJECT_DIR$/res/layout/plant_info.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PhotoExample.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,36 +104,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PlantInfoActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="18" selection-start="2441" selection-end="2441" vertical-scroll-proportion="0.25925925" vertical-offset="924" max-vertical-offset="1485">
-              <folding>
-                <element signature="e#929#959#0" expanded="true" />
-                <element signature="e#3067#3492#0" expanded="true" />
-                <element signature="e#3228#3267#0" expanded="true" />
-                <element signature="e#3469#3470#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageSender.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="56" selection-start="1863" selection-end="1863" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="2700">
-              <folding>
-                <element signature="e#3512#3524#0" expanded="true" />
-                <element signature="e#5109#5124#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SonyTouchActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="177" column="64" selection-start="6509" selection-end="6509" vertical-scroll-proportion="0.0" vertical-offset="2112" max-vertical-offset="3780">
+            <state line="258" column="24" selection-start="9337" selection-end="9337" vertical-scroll-proportion="0.0" vertical-offset="3302" max-vertical-offset="3780">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="63" selection-start="360" selection-end="360" vertical-scroll-proportion="0.21966527" vertical-offset="0" max-vertical-offset="478">
               <folding />
             </state>
           </provider>
@@ -152,7 +128,21 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="576" selection-end="576" vertical-scroll-proportion="-7.2413793" vertical-offset="0" max-vertical-offset="450">
+            <state line="21" column="0" selection-start="817" selection-end="817" vertical-scroll-proportion="-10.862069" vertical-offset="0" max-vertical-offset="450">
+              <folding>
+                <element signature="e#468#488#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="surface_view.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/surface_view.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="465">
               <folding />
             </state>
           </provider>
@@ -190,12 +180,12 @@
         <option value="$PROJECT_DIR$/src/com/infodplant/InfoDPlantSingleton.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/InfoDPlantApplication.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/res/layout/plant_info.xml" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/plant_info.xml" />
+        <option value="$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
       </list>
     </option>
   </component>
@@ -218,7 +208,7 @@
         </expanded-state>
         <selected-state>
           <State>
-            <id>Abstraction issues</id>
+            <id>Android</id>
           </State>
         </selected-state>
       </profile-state>
@@ -451,7 +441,7 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Celuchoto" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Cheto42-ARM" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
@@ -465,7 +455,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -725,14 +715,14 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32802126" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31474105" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31474105" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48339975" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24748202" sideWeight="0.6746348" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.6746348" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26043165" sideWeight="0.685259" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32536522" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26043165" sideWeight="0.6746348" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32536522" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3294964" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="1529" y="155" width="952" height="479" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964029" sideWeight="0.6746348" order="3" side_tool="false" content_ui="combo" />
@@ -847,18 +837,10 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="43" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/plant_info.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="43" selection-start="816" selection-end="816" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="525">
-          <folding />
+          <folding>
+            <element signature="e#468#488#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -934,10 +916,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/res/layout/surface_view.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="51" selection-start="471" selection-end="471" vertical-scroll-proportion="0.2777778" vertical-offset="0" max-vertical-offset="486">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="47" selection-start="2972" selection-end="2972" vertical-scroll-proportion="2.4691358" vertical-offset="0" max-vertical-offset="1485">
+          <folding>
+            <element signature="e#929#959#0" expanded="true" />
+            <element signature="e#3067#3492#0" expanded="true" />
+            <element signature="e#3228#3267#0" expanded="true" />
+            <element signature="e#3469#3470#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="56" selection-start="1863" selection-end="1863" vertical-scroll-proportion="0.27366254" vertical-offset="17" max-vertical-offset="2700">
+          <folding>
+            <element signature="e#3512#3524#0" expanded="true" />
+            <element signature="e#5109#5124#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -946,37 +953,24 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="576" selection-end="576" vertical-scroll-proportion="-7.2413793" vertical-offset="0" max-vertical-offset="450">
-          <folding />
+        <state line="21" column="0" selection-start="817" selection-end="817" vertical-scroll-proportion="-10.862069" vertical-offset="0" max-vertical-offset="450">
+          <folding>
+            <element signature="e#468#488#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="64" selection-start="6509" selection-end="6509" vertical-scroll-proportion="0.0" vertical-offset="2112" max-vertical-offset="3780">
+        <state line="258" column="24" selection-start="9337" selection-end="9337" vertical-scroll-proportion="0.0" vertical-offset="3302" max-vertical-offset="3780">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/ImageSender.java">
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="56" selection-start="1863" selection-end="1863" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="2700">
-          <folding>
-            <element signature="e#3512#3524#0" expanded="true" />
-            <element signature="e#5109#5124#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="18" selection-start="2441" selection-end="2441" vertical-scroll-proportion="0.25925925" vertical-offset="924" max-vertical-offset="1485">
-          <folding>
-            <element signature="e#929#959#0" expanded="true" />
-            <element signature="e#3067#3492#0" expanded="true" />
-            <element signature="e#3228#3267#0" expanded="true" />
-            <element signature="e#3469#3470#0" expanded="true" />
-          </folding>
+        <state line="7" column="63" selection-start="360" selection-end="360" vertical-scroll-proportion="0.21966527" vertical-offset="0" max-vertical-offset="478">
+          <folding />
         </state>
       </provider>
     </entry>
