@@ -62,6 +62,13 @@ public class SonyPhotoWorker implements Runnable {
     //Threshold BaseLine
     private double thresh = 999999;
 
+    //NEW! in range function
+    private Scalar lowerInRange = new Scalar(0,0,0);
+    private Scalar upperInRange = new Scalar(0,0,0);
+    public static final double IN_RANGE_LOWER_BOUD = 30;
+    public static final double IN_RANGE_UPPER_BOUD = 30;
+
+
     // Preview size
     private static int PREVIEW_WIDTH = 480;
     private static int PREVIEW_HEIGHT = 320;
@@ -205,6 +212,11 @@ public class SonyPhotoWorker implements Runnable {
                     // Get the Matrix representing the ROI
                     Mat roi = mCurrentFrameGray.submat(roiRect);
                     changeThresholdValue(roi);
+
+                    //For InRange Threshold
+                    Mat roiInRange = mCurrentFrame.submat(roiRect);
+                    changeInRangeValues(roiInRange);
+
                     mSelectedPoint = null;
                 }
 
@@ -212,11 +224,15 @@ public class SonyPhotoWorker implements Runnable {
                 if (thresh < THRESHOLD_HIGH_LIMIT) {
                     // Using the color limits to generate a mask (mThreshFrameResult)
 //                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mThreshFrameResult);
-                    double threshold = Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh,
-                            255.0, Imgproc.THRESH_BINARY);
+
+                    //InRange ThresHolding
+                    Core.inRange(mCurrentFrameGray,lowerInRange,upperInRange,mThreshFrameResult);
+
+//                    //Basic Thresholding
+//                    double threshold = Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh,
+//                            255.0, Imgproc.THRESH_BINARY);
+
                     // Clear (set to black) the filtered image frame
-
-
 //                    mFilteredFrame.setTo(new Scalar(0, 0, 0));
                     // Copy the current frame in RGB to the filtered frame using the mask.
                     // Only the pixels in the mask will be copied.
@@ -256,6 +272,28 @@ public class SonyPhotoWorker implements Runnable {
 
         //use channel 1
         thresh = sumColorValues[0] + THRESHOLD_UPPER_BOUND;
+
+
+    }
+
+    /**
+     * Changes the In range threshold values. Used when applying InRangeThreshold
+     * @param roi the region of interest. The range value will be the mean of the roi +- the bounds
+     */
+    private void changeInRangeValues(Mat roi){
+        // Calculate the mean value of the the ROI matrix
+        Scalar sumColor = Core.mean(roi);
+        double[] sumColorValues = sumColor.val;
+
+        upperInRange.set(new double[]{sumColorValues[0] + IN_RANGE_UPPER_BOUD,
+                sumColorValues[1] + IN_RANGE_UPPER_BOUD,
+                sumColorValues[2] + IN_RANGE_UPPER_BOUD});
+
+
+        lowerInRange.set(new double[]{sumColorValues[0] - IN_RANGE_LOWER_BOUD,
+                sumColorValues[1] - IN_RANGE_LOWER_BOUD,
+                sumColorValues[2] - IN_RANGE_LOWER_BOUD});
+
     }
 
 
