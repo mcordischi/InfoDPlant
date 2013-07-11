@@ -30,14 +30,44 @@ vector<Point> bigestContour(Mat img)
 	return contours[cnt];
 }
 
-void circleFill(Mat img, Point center, int radius, int & total, int & filled )
+
+
+double circleFill(Mat img, Point center, int radius )
 {
 	Mat maskImg = Mat::zeros(img.size().height, img.size().width, img.type());
 	Mat resultImg = Mat::zeros(img.size().height, img.size().width, img.type());
 	circle(maskImg, center, radius, Scalar(255, 255, 255), -1);
 	img.copyTo(resultImg, maskImg);
-	total = countNonZero(maskImg);
-	filled = countNonZero(resultImg);
+	int total = countNonZero(maskImg);
+	int filled = countNonZero(resultImg);
+	return filled / (double)total;
+}
+
+double curvature(vector<Point> contour)
+{
+    double acc = 0;
+    int n = 0;
+    
+    RotatedRect rotArea = minAreaRect(contour);
+    int R = rotArea.size.height * rotArea.size.width;
+    
+    Rect bbox = boundingRect(contour);
+    
+    Mat img = Mat::zeros(bbox.size().height*3, bbox.size().width*3, CV_8UC1);
+    vector<vector<Point> > contours;
+    contours.push_back(contour);
+    drawContours( img(Rect(0,0,bbox.size().height, bbox.size().width)), contours, 0, Scalar(255,255,255), -1);
+    
+	for(vector<Point>::iterator it = contour.begin(); it != contour.end(); ++it)
+    {
+        double s = R*0.1;
+        for(double r = .1; r <= R;r+=s)
+        {
+            acc+= circleFill(img, *it, (int)r);
+            n++;
+        }
+    }
+    return acc/(double)n;
 }
 
 double rectangularity(vector<Point> contour)

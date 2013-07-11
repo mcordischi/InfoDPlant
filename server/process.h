@@ -9,6 +9,6 @@ extern vector<Point> bigestContour(Mat img);
 
 extern double circularity(vector<Point>); 
 extern double rectangularity(vector<Point>);
-extern int circleFill(Mat img, Point center, int radius , int & total, int & filled );
+extern double curvature(vector<Point> contour);
 
 #endif
