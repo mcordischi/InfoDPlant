@@ -30,8 +30,28 @@ vector<Point> bigestContour(Mat img)
 	return contours[cnt];
 }
 
-double circularity(int Area, int perimeter)
+void circleFill(Mat img, Point center, int radius, int & total, int & filled )
 {
+	Mat maskImg = Mat::zeros(img.size().height, img.size().width, img.type());
+	Mat resultImg = Mat::zeros(img.size().height, img.size().width, img.type());
+	circle(maskImg, center, radius, Scalar(255, 255, 255), -1);
+	img.copyTo(resultImg, maskImg);
+	total = countNonZero(maskImg);
+	filled = countNonZero(resultImg);
+}
+
+double rectangularity(vector<Point> contour)
+{
+	int Area = contourArea(contour);
+	RotatedRect bbox = minAreaRect(contour);
+	double bboxArea = bbox.size.height * bbox.size.width; 
+	return Area / bboxArea;
+}
+
+double circularity(vector<Point> contour)
+{
+	int Area = contourArea(contour);
+	int perimeter = arcLength(contour, 1);
 	double perimeterSqr = perimeter * perimeter;
 
 	return (4*PI*Area)/perimeterSqr;

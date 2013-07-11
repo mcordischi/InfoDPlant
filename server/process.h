@@ -7,6 +7,8 @@ using namespace cv;
 
 extern vector<Point> bigestContour(Mat img);
 
-extern double circularity(int Area, int perimeter); 
+extern double circularity(vector<Point>); 
+extern double rectangularity(vector<Point>);
+extern int circleFill(Mat img, Point center, int radius , int & total, int & filled );
 
 #endif

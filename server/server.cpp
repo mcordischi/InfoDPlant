@@ -11,15 +11,22 @@
 
 #define MAX_CON 3
 #define PORT 80
-#define BUF_SIZE 2048
+#define BUF_SIZE 10240*4
 	
 //----- HTTP response messages ----------------------------------------------
-#define OK_IMAGE    "HTTP/1.0 200 OK\nContent-Type:image/gif\n\n"
-#define OK_TEXT     "HTTP/1.0 200 OK\nContent-Type:text/html\n\n"
-#define NOTOK_404   "HTTP/1.0 404 Not Found\nContent-Type:text/html\n\n"
-#define MESS_404    "<html><body><h1>FILE NOT FOUND</h1></body></html>\n\n\n\0"
+#define OK_IMAGE    "HTTP/1.0 200 OK\nContent-Type:image/gif\r\n\r\n"
+#define UPLOAD		"<html><body><h1>Subir</h1><form method='POST' enctype='multipart/form-data'><input type='file' name='img'/><br><input type='submit'></form></body></html>\r\n\r\n"
+#define OK_TEXT     "HTTP/1.0 200 OK\r\nContent-Type:text/html; charset=UTF-8\r\nTransfer-Encoding: chunked\r\nContent-Length: %d\r\nConnection: close\r\n\r\n"
+#define NOTOK_404   "HTTP/1.0 404 Not Found\nContent-Type:text/html\r\n\r\n"
+#define MESS_404    "<html><body><h1>FILE NOT FOUND</h1></body></html>\r\n\r\n"
 	
 bool stop = 0;
+
+typedef struct
+{
+	unsigned int client_socket;
+	char* (*proc)(char*);
+} ThArgs;
 
 void *my_thread(void * arg)
 {
@@ -29,17 +36,18 @@ void *my_thread(void * arg)
 	char           in_buf[BUF_SIZE];           // Input buffer for GET resquest
 	char           out_buf[BUF_SIZE];          // Output buffer for HTML response
 	char           *file_name;                 // File name
-	char           *method;                 	// Method
 	unsigned int   fh;                         // File handle (file descriptor)
 	unsigned int   buf_len;                    // Buffer length for file reads
 	unsigned int   retcode;                    // Return code
- 
-	myClient_s = *(unsigned int *)arg;        // copy the socket
- 
+	ThArgs		   thArgs;							// Thread argument mess
+	thArgs = *(ThArgs*)arg;        // copy the socket and etc
+	free(arg);
+	myClient_s = thArgs.client_socket;
 	/* receive the first HTTP request (HTTP GET) ------- */
+	
 	retcode = recv(myClient_s, in_buf, BUF_SIZE, 0);
 	
-	printf(in_buf);
+	//printf(in_buf);
  
 	/* if receive error --- */
 	if (retcode < 0)
@@ -51,13 +59,48 @@ void *my_thread(void * arg)
 	else
 	{    
 		/* Parse out the filename from the GET request --- */
-        method = strtok(in_buf, " ");
-		if(0 == strcmp(method, "POST"))
+        char method[5];
+		strncpy(method, in_buf, 4);
+		method[4] = 0;
+		if(0 == strcmp(method,"POST"))
 		{
+			char * img = "";
+			if(0 == strstr(in_buf,"Content-Type: multipart/form-data;"))
+			{
+				img = strtok(strstr(in_buf, "\nimg=")+5, "\n");
+				printf(img);
+			}else{
+				// TODO: multipart/form-data
+				/*
+				char * begBoundary = strstr(in_buf, "boundary=")+strlen("boundary=");
+				char * endBoundary = strchr(begBoundary,'\r');
+				char boundary[endBoundary-begBoundary+1];
+				strncpy(boundary, begBoundary, endBoundary-begBoundary);
+				printf("Boundary %s\n", boundary);
+				img = strstr(strstr(strstr(strstr(strstr(endBoundary, boundary),"\r\n"),"\r\n"),"\r\n"),"\r\n");
+				printf("img: %d\n", img);
+				char * end = strstr(img, boundary)-2;
+				
+				FILE * f = fopen("temp.bmp","w");
+				fwrite (img , sizeof(char), end-img, f);
+				fclose(f);
+				*/
+				
+			}
+			char * ans = thArgs.proc(img);
+			sprintf(out_buf, OK_TEXT, strlen(ans));
+			send(myClient_s, out_buf, strlen(out_buf), 0);
+			strcpy(out_buf, ans);
+			free(ans);
+			send(myClient_s, out_buf, strlen(out_buf), 0);
+			strcpy(out_buf, "\r\n\r\n\0");
+			send(myClient_s, out_buf, strlen(out_buf), 0);
 		}
 		else
 		{
-			strcpy(out_buf, MESS_404);
+			sprintf(out_buf, OK_TEXT, strlen(UPLOAD));
+			send(myClient_s, out_buf, strlen(out_buf), 0);
+			strcpy(out_buf, UPLOAD);
 			send(myClient_s, out_buf, strlen(out_buf), 0);
 		}       
 	}
@@ -65,7 +108,7 @@ void *my_thread(void * arg)
 	pthread_exit(NULL);
 }
 
-void listen()
+void listen(char* (*proc)(char*))
 {
 	#ifdef WIN32
 	WSADATA wsaData;
@@ -116,8 +159,9 @@ void listen()
 		
 		
 		/* Create a child thread --------------------------------------- */
-        unsigned int * ids = (unsigned int*)malloc(sizeof(unsigned int));
-		*ids = cli_socket;
-        pthread_create (&threads, &attr, my_thread, ids);
+        ThArgs * args = (ThArgs*)malloc(sizeof(ThArgs));
+		(*args).client_socket = cli_socket;
+		(*args).proc = proc;
+        pthread_create (&threads, &attr, my_thread, args);
 	}
 }
