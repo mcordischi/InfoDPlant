@@ -68,7 +68,6 @@ void *my_thread(void * arg)
 			if(0 == strstr(in_buf,"Content-Type: multipart/form-data;"))
 			{
 				img = strtok(strstr(in_buf, "\nimg=")+5, "\n");
-				printf(img);
 			}else{
 				// TODO: multipart/form-data
 				/*
