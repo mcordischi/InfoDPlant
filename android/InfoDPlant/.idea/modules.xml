@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/InfoDPlantAndroid.iml" filepath="$PROJECT_DIR$/InfoDPlantAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../tutorials/OpenCV-2.4.6-android-sdk/samples/tutorial-1-camerapreview/java/sdk.iml" filepath="$PROJECT_DIR$/../../../tutorials/OpenCV-2.4.6-android-sdk/samples/tutorial-1-camerapreview/java/sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../tutorials/OpenCV-2.4.6-android-sdk/samples/tutorial-1-camerapreview/java/tutorial-1-camerapreview.iml" filepath="$PROJECT_DIR$/../../../tutorials/OpenCV-2.4.6-android-sdk/samples/tutorial-1-camerapreview/java/tutorial-1-camerapreview.iml" />
     </modules>
   </component>
 </project>
