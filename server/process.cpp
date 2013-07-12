@@ -49,7 +49,7 @@ double curvature(vector<Point> contour)
     int n = 0;
     
     RotatedRect rotArea = minAreaRect(contour);
-    int R = rotArea.size.height * rotArea.size.width;
+    int R = (rotArea.size.height + rotArea.size.width) / 2;
     
     Rect bbox = boundingRect(contour);
     
@@ -57,11 +57,10 @@ double curvature(vector<Point> contour)
     vector<vector<Point> > contours;
     contours.push_back(contour);
     drawContours( img(Rect(0,0,bbox.size().height, bbox.size().width)), contours, 0, Scalar(255,255,255), -1);
-    
 	for(vector<Point>::iterator it = contour.begin(); it != contour.end(); ++it)
     {
         double s = R*0.1;
-        for(double r = .1; r <= R;r+=s)
+        for(double r = .25; r <= R;r+=s)
         {
             acc+= circleFill(img, *it, (int)r);
             n++;
