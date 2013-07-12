@@ -19,6 +19,12 @@ process.o: process.cpp
 
 server.o: server.cpp
 	g++ $(INCLUDE) -c server.cpp -std=gnu++0x
+	
+utils.o: utils.cpp
+	g++ $(CV_INCLUDE) -c utils.cpp
+	
+utils.exe: utils.o
+	g++ utils.o -L"C:\opencv\build\x86\mingw\lib" $(LIBS) -o utils.exe
 
-main.exe: main.o process.o server.o
+main.exe: main.o process.o server.o utils.o
 	g++ *.o -L"C:\opencv\build\x86\mingw\lib" $(LIBS) -o main.exe
