@@ -97,7 +97,7 @@ public class ImageSender extends AsyncTask<String, Void, Pair<String,String>>{
     }
     /**
      * Saves the contour to a file, if there is no contour, saves the image
-     * TODO sendit to SonyPhotoWorker
+     * TODO send it to SonyPhotoWorker
      */
     protected void saveBitmap(){
         Bitmap bitmap;
