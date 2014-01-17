@@ -110,8 +110,10 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
     @Override
     protected void onPause() {
         super.onPause();
-        mWorker.stopProcessing();
-        mWorker.removeResultCallback(this);
+        if (mWorker != null){
+            mWorker.stopProcessing();
+            mWorker.removeResultCallback(this);
+        }
 
         if (mSurfaceHolder != null) {
             mSurfaceHolder.removeCallback(this);
