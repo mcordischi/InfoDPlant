@@ -64,7 +64,7 @@ public class SonyPhotoWorker implements Runnable {
     // The max threshold value accepted
     public static final double THRESHOLD_HIGH_LIMIT = 235;
     // Increasing the threshold
-    public static final double THRESHOLD_UPPER_BOUND = 120;
+    public static final double THRESHOLD_UPPER_BOUND = 150;
 
     //Threshold BaseLine
     private double thresh = 999999;
@@ -97,6 +97,10 @@ public class SonyPhotoWorker implements Runnable {
     private Mat mFilteredFrame;
     private Mat mThreshFrameResult;
     private Mat mCurrentFrameGray;
+
+    //Result contours and maxAreaId
+    private ArrayList<MatOfPoint> contours;
+    int maxAreaIdx;
 
     private long mPrevFrameTime;
 
@@ -131,25 +135,30 @@ public class SonyPhotoWorker implements Runnable {
 
     // Setup the camera
     private void setupCamera() {
+        boolean firstTime= true;
         if (mCamera != null) {
             VideoCapture camera = mCamera;
             mCamera = null; // Make it null before releasing...
             camera.release();
+            firstTime = false;
         }
 
+//      while (mCamera == null)
         mCamera = new VideoCapture(mCameraId);
 
         // Figure out the most appropriate preview size that this camera supports.
         // We always need to do this as each device support different preview sizes for their cameras
-        List<Size> previewSizes = mCamera.getSupportedPreviewSizes();
-        double largestPreviewSize = 1280 * 720; // We should be smaller than this...
-        double smallestWidth = 480; // Let's not get a smaller width than this...
-        for (Size previewSize : previewSizes) {
-            if (previewSize.area() < largestPreviewSize && previewSize.width >= smallestWidth) {
-                mPreviewSize = previewSize;
+        //TODO Opencv Bug? sometimes getSupportedPreviewSizes returns error
+        if (firstTime){
+            List<Size> previewSizes = mCamera.getSupportedPreviewSizes();
+            double largestPreviewSize = 720 * 480; // We should be smaller than this...
+            double smallestWidth = 480; // Let's not get a smaller width than this...
+            for (Size previewSize : previewSizes) {
+                if (previewSize.area() < largestPreviewSize && previewSize.width >= smallestWidth) {
+                    mPreviewSize = previewSize;
+                }
             }
         }
-
         mCamera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, mPreviewSize.width);
         mCamera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, mPreviewSize.height);
     }
@@ -317,6 +326,7 @@ public class SonyPhotoWorker implements Runnable {
         return bitmap;
     }
 
+
     /**
      * Why get a bitmap instead of the List of points? Opencv's Point isw not serializable =(
      * Now you have 2 choices. Get the contour as a List of points with {@link #getContour()} and
@@ -328,7 +338,7 @@ public class SonyPhotoWorker implements Runnable {
         int h = PREVIEW_HEIGHT;
         Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
         List<Point> contour = getContour();
-        //Ugly code thanks to Openc - Handles disgusting classes
+        //Ugly code thanks to Opencv - Handles disgusting classes
         List<MatOfPoint> contoursUgly = new ArrayList<MatOfPoint>(1);
         MatOfPoint matOfPoint = new MatOfPoint();
         matOfPoint.fromList(contour);
@@ -340,6 +350,10 @@ public class SonyPhotoWorker implements Runnable {
         return bitmap;
     }
 
+    public Mat getContourMat(){
+        return contours.get(maxAreaIdx);
+    }
+
     public Bitmap getOriginalImage(){
         int w = mCurrentFrame.width();
         int h = mCurrentFrame.height();
@@ -349,16 +363,17 @@ public class SonyPhotoWorker implements Runnable {
     }
 
 
+
     /**
      * Analize the filtered image's contour.
      * @return the biggest contour
      */
     public List<Point> getContour(){
-        ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Mat mat = new Mat();
+        contours = new ArrayList<MatOfPoint>();
+        Mat mat= new Mat();
         Imgproc.findContours(mThreshFrameResult,contours,mat, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
         double maxArea = -1;
-        int maxAreaIdx = -1;
+        maxAreaIdx = -1;
         for (int idx = 0; idx < contours.size(); idx++) {
             Mat contour = contours.get(idx);
             double contourArea = Imgproc.contourArea(contour);
@@ -367,7 +382,6 @@ public class SonyPhotoWorker implements Runnable {
                 maxAreaIdx = idx;
             }
         }
-
         return contours.get(maxAreaIdx).toList();
     }
 

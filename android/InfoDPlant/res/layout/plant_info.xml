@@ -20,6 +20,27 @@
             android:layout_gravity="center"
             android:longClickable="false"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Image"
+        android:id="@+id/saveImg"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onSaveContourClick" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contourView"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Contour"
+        android:id="@+id/saveContourButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onSaveContourClick" />
 
 
 </LinearLayout>

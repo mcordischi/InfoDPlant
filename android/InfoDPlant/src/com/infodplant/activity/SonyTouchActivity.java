@@ -41,6 +41,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.*;
 
+import com.infodplant.InfoApp;
 import com.infodplant.R;
 import com.infodplant.process.SonyPhotoWorker;
 
@@ -174,23 +175,11 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
 
         Intent intent = new Intent(this, PlantInfoActivity.class);
 
-
-//        //Convert to byte array
-        Bitmap bitmap = mWorker.getOriginalImage();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        intent.putExtra(BITMAP_MESSAGE,byteArray);
-
-//        //Add the list of points
-//        //ERROR: Point not serializable :\
-//        Bitmap contoursBitmap = mWorker.getContourImage();
-//        intent.putExtra(CONTOUR_IMG_MESSAGE,contoursBitmap);
-
-//        List<Point> contour = mWorker.getContour();
-//        Object[] c = contour.toArray();
-//        intent.putExtra(CONTOUR_MESSAGE,c);
-
+        //Set the global variables
+        InfoApp app = (InfoApp)getApplication();
+        app.setImage(mWorker.getOriginalImage());
+        app.setContourMat(mWorker.getContourMat());
+        app.setContourImage(mWorker.getContourImage());
 
         startActivity(intent);
         return true;

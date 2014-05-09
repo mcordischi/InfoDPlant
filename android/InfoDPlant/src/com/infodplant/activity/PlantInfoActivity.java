@@ -3,21 +3,23 @@ package com.infodplant.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.infodplant.InfoApp;
 import com.infodplant.R;
 import com.infodplant.process.ImageSender;
-import com.infodplant.process.SonyPhotoWorker;
 
-import org.opencv.core.Point;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by marto on 7/7/13.
@@ -25,7 +27,12 @@ import org.opencv.core.Point;
 public class PlantInfoActivity extends Activity {
 
 
+
+    //TODO move this away
+    public static String appName = "InfoDPlant";
+
     private Bitmap originalImage;
+    private Bitmap contourImage;
     private ImageSender imgSender;
 
     @Override
@@ -37,50 +44,32 @@ public class PlantInfoActivity extends Activity {
         imgSender = new ImageSender(this,getString(R.string.server_url));
 
 
-
-        Intent intent = getIntent();
-        //get the original image
-        byte[] byteArray = intent.getByteArrayExtra(SonyTouchActivity.BITMAP_MESSAGE);
-        originalImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-
-
-        //get the countour Image
-//        Bitmap contourImage;
-//        byte[] byteArrayContourImage = intent.getByteArrayExtra(SonyTouchActivity.BITMAP_MESSAGE);
-//        contourImage = BitmapFactory.decodeByteArray(byteArrayContourImage, 0, byteArrayContourImage.length);
-
-        //Set the contourImage to send
-//        imgSender.setByteArray(byteArrayContourImage);
-
-//        //Sets a contour in the ImageSender
-//        imgSender.setContour((Point[]) intent.getSerializableExtra(SonyTouchActivity.CONTOUR_MESSAGE));
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             //Execute in parallel
             imgSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://url.com/image.png");
         }else
             imgSender.execute();
-
-
-
-
     }
 
 
     @Override
     public void onStart(){
         super.onStart();
-        setPic();
+        setPics();
     }
 
 
     /**
      *  Associates the bitmap to the ImageView
      */
-    public void setPic() {
+    public void setPics() {
         ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+        originalImage = ((InfoApp)getApplication()).getImage();
         mImageView.setImageBitmap(originalImage);
+
+        ImageView mContourView = (ImageView) findViewById(R.id.contourView);
+        contourImage = ((InfoApp)getApplication()).getImage();
+        mContourView.setImageBitmap(contourImage);
     }
 
     /**
@@ -107,4 +96,26 @@ public class PlantInfoActivity extends Activity {
                     });
             }
     }
+
+
+    /* Saves in media original image*/
+    public void onSaveImageClick(View view){
+        Log.i(appName, "Writing in external storage");
+        MediaStore.Images.Media.insertImage(getContentResolver(), originalImage, "myImage_" + getFileID() + ".jpg" , "infoDPlant");
+    }
+
+    /* Saves in media the contour as an image*/
+    public void onSaveContourClick(View view){
+        //TODO
+    }
+
+
+    /* Generates an unique ID for files*/
+    private String getFileID(){
+        SimpleDateFormat formatter = new SimpleDateFormat("MM_dd_HH_mm_ss");
+        Date now = new Date();
+        return formatter.format(now);
+    }
+
+
 }
