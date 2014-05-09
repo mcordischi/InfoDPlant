@@ -31,6 +31,7 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Size;
+import org.opencv.core.Point;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,13 +40,15 @@ import android.graphics.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.*;
+import android.widget.Toast;
 
 import com.infodplant.InfoApp;
 import com.infodplant.R;
 import com.infodplant.process.SonyPhotoWorker;
 
-import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 /**
  * @author Erik Hellman <erik.hellman@sonymobile.com>
@@ -172,7 +175,27 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
         //Starts a new activity with the plant information
 //        mWorker.clearSelectedColor();
         mWorker.stopProcessing();
+        boolean isResultReady = mWorker.processResults();
 
+        Log.i("InfoDPlant","Double tap");
+
+        if (!isResultReady){
+            //No leaf found
+
+            Log.i("InfoDPlant","No Leaf Foud");
+            mWorker.run();
+
+            Context context = getApplicationContext();
+            CharSequence text = "No leaf found"; //TODO send to resources
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            return false;
+        }
+
+        Log.i("InfoDPlant","Leaf found! Initiating PlantInfoActivity...");
         Intent intent = new Intent(this, PlantInfoActivity.class);
 
         //Set the global variables

@@ -28,6 +28,9 @@ package com.infodplant.process;
  */
 
 import android.graphics.Bitmap;
+import android.util.Log;
+
+import com.infodplant.R;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -51,6 +54,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Erik Hellman <erik.hellman@sonymobile.com>
+ *     Edited by Marto
  */
 public class SonyPhotoWorker implements Runnable {
     public static final String TAG = "OpenCVWorker";
@@ -82,7 +86,7 @@ public class SonyPhotoWorker implements Runnable {
     private Size mPreviewSize;
 
     /**
-     * Boolean
+     * Booleans
      */
     private boolean mDoProcess;
     private int mCameraId = SECOND_CAMERA;
@@ -98,23 +102,30 @@ public class SonyPhotoWorker implements Runnable {
     private Mat mThreshFrameResult;
     private Mat mCurrentFrameGray;
 
-    //Result contours and maxAreaId
-    private ArrayList<MatOfPoint> contours;
-    int maxAreaIdx;
 
-    private long mPrevFrameTime;
+    /**
+     * Results related variables
+     */
+    boolean isContour;
+    boolean isResultAvailable;
+    boolean isImage;
+    boolean isContourImage;
 
-
+    private Mat contour;
+    private Bitmap originalImage;
+    private Bitmap contourImage;
 
     private Point mSelectedPoint = null;
 
-    private Scalar mLowerColorLimit;
-    private Scalar mUpperColorLimit;
+
+
 
     public SonyPhotoWorker(int cameraId) {
+        Log.i("InfoDPlant","SonyPhotoWorker Created");
         mCameraId = cameraId;
         // Default preview size
         mPreviewSize = new Size(PREVIEW_WIDTH, PREVIEW_HEIGHT);
+        isContour = false;
     }
 
     public void releaseResultBitmap(Bitmap bitmap) {
@@ -187,6 +198,8 @@ public class SonyPhotoWorker implements Runnable {
      */
     @Override
     public void run() {
+        Log.i("InfoDPlant","SonyPhotoWorker running");
+        isResultAvailable = false;
         mDoProcess = true;
         Rect previewRect = new Rect(0, 0, (int) mPreviewSize.width, (int) mPreviewSize.height);
 
@@ -271,6 +284,20 @@ public class SonyPhotoWorker implements Runnable {
 
     }
 
+    /**
+     * Processes the information in order to give results.
+     * This method must be called after {@link #stopProcessing()}, and before
+     * trying to get the images and contours, otherwise they will return false.
+     *
+     */
+    public boolean processResults(){
+        //TODO
+        isContour = processContour();
+        isContourImage = processContourImage();
+        isImage = processOriginalImage();
+        isResultAvailable = isContour && isContourImage && isImage;
+        return isResultAvailable;
+    }
 
     /**
      * Changes the Threshold base line. More information in
@@ -278,6 +305,7 @@ public class SonyPhotoWorker implements Runnable {
      * @param roi the region of interest. The thresh value will be the mean of the roi, minus a constant
      */
     private void changeThresholdValue(Mat roi){
+        Log.i("InfoDPlant","Changing threshold Value");
         // Calculate the mean value of the the ROI matrix
         Scalar sumColor = Core.mean(roi);
         double[] sumColorValues = sumColor.val;
@@ -312,54 +340,24 @@ public class SonyPhotoWorker implements Runnable {
 
     }
 
-
     /**
-     * @deprecated Why would you use the filtered image if you can get the contours? Call  {@link #getContour()}!
-     * Returns the filtered Image in bitmap format
-     * @return the image
-     */
-    public Bitmap getFiteredImage(){
-        int w = mThreshFrameResult.width();
-        int h = mThreshFrameResult.height();
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ALPHA_8);
-        Utils.matToBitmap(mThreshFrameResult,bitmap);
-        return bitmap;
-    }
-
-
-    /**
-     * Why get a bitmap instead of the List of points? Opencv's Point isw not serializable =(
-     * Now you have 2 choices. Get the contour as a List of points with {@link #getContour()} and
-     * serialize it in your own way, or take the list of poits as a image this this method.
      * @return A bitmap with the contour
      */
-    public Bitmap getContourImage(){
+    private boolean processContourImage(){
+        if (!isContour) return false;
         int w = PREVIEW_WIDTH;
         int h = PREVIEW_HEIGHT;
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
-        List<Point> contour = getContour();
-        //Ugly code thanks to Opencv - Handles disgusting classes
-        List<MatOfPoint> contoursUgly = new ArrayList<MatOfPoint>(1);
-        MatOfPoint matOfPoint = new MatOfPoint();
-        matOfPoint.fromList(contour);
-        contoursUgly.add(matOfPoint);
-
-        Mat img = new Mat(PREVIEW_WIDTH, PREVIEW_HEIGHT,CvType.CV_8SC1);
-        Imgproc.drawContours(img,contoursUgly,-1,new Scalar(255,255,255));
-        Utils.matToBitmap(img,bitmap);
-        return bitmap;
+        contourImage = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
+        Utils.matToBitmap(contour,contourImage);
+        return true;
     }
 
-    public Mat getContourMat(){
-        return contours.get(maxAreaIdx);
-    }
-
-    public Bitmap getOriginalImage(){
+    private boolean processOriginalImage(){
         int w = mCurrentFrame.width();
         int h = mCurrentFrame.height();
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(mCurrentFrame,bitmap);
-        return bitmap;
+        originalImage = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(mCurrentFrame,originalImage);
+        return true;
     }
 
 
@@ -368,12 +366,16 @@ public class SonyPhotoWorker implements Runnable {
      * Analize the filtered image's contour.
      * @return the biggest contour
      */
-    public List<Point> getContour(){
-        contours = new ArrayList<MatOfPoint>();
+    private boolean processContour(){
+        ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
         Mat mat= new Mat();
         Imgproc.findContours(mThreshFrameResult,contours,mat, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
         double maxArea = -1;
-        maxAreaIdx = -1;
+        int maxAreaIdx = -1;
+        if (contours.size()==0) {
+            Log.i("InfoDPlant","Contour not found");
+            return false;
+        }
         for (int idx = 0; idx < contours.size(); idx++) {
             Mat contour = contours.get(idx);
             double contourArea = Imgproc.contourArea(contour);
@@ -382,7 +384,8 @@ public class SonyPhotoWorker implements Runnable {
                 maxAreaIdx = idx;
             }
         }
-        return contours.get(maxAreaIdx).toList();
+        contour = contours.get(maxAreaIdx);
+        return true;
     }
 
 
