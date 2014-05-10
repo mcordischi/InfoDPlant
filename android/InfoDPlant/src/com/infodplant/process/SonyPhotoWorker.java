@@ -28,6 +28,7 @@ package com.infodplant.process;
  */
 
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.util.Log;
 
 import com.infodplant.R;
@@ -68,7 +69,7 @@ public class SonyPhotoWorker implements Runnable {
     // The max threshold value accepted
     public static final double THRESHOLD_HIGH_LIMIT = 235;
     // Increasing the threshold
-    public static final double THRESHOLD_UPPER_BOUND = 150;
+    public static final double THRESHOLD_UPPER_BOUND = 170;
 
     //Threshold BaseLine
     private double thresh = 999999;
@@ -76,14 +77,19 @@ public class SonyPhotoWorker implements Runnable {
     //NEW! in range function
     private Scalar lowerInRange = new Scalar(0,0,0);
     private Scalar upperInRange = new Scalar(0,0,0);
-    public static final double IN_RANGE_LOWER_BOUD = 30;
-    public static final double IN_RANGE_UPPER_BOUD = 30;
+    private static Scalar defaultLowerInRange = new Scalar(45,0,45);
+    private static Scalar defaultUpperInRange = new Scalar(220,255,220);
+    public static final double IN_RANGE_LOWER_BOUD = 45;
+    public static final double IN_RANGE_UPPER_BOUD = 45;
 
 
     // Preview size
-    private static int PREVIEW_WIDTH = 480;
-    private static int PREVIEW_HEIGHT = 320;
+    private static int PREVIEW_WIDTH = 720;
+    private static int PREVIEW_HEIGHT = 480;
     private Size mPreviewSize;
+
+    //Minimun allowed Area Size
+    private static double MIN_AREA = 50;
 
     /**
      * Booleans
@@ -101,6 +107,7 @@ public class SonyPhotoWorker implements Runnable {
     private Mat mFilteredFrame;
     private Mat mThreshFrameResult;
     private Mat mCurrentFrameGray;
+    private Mat hierarchy;
 
 
     /**
@@ -115,6 +122,11 @@ public class SonyPhotoWorker implements Runnable {
     private Bitmap originalImage;
     private Bitmap contourImage;
 
+    //Aux result related
+    ArrayList<MatOfPoint> contours;
+    int maxAreaIdx;
+
+
     private Point mSelectedPoint = null;
 
 
@@ -126,6 +138,10 @@ public class SonyPhotoWorker implements Runnable {
         // Default preview size
         mPreviewSize = new Size(PREVIEW_WIDTH, PREVIEW_HEIGHT);
         isContour = false;
+        isResultAvailable = false;
+        isImage= false;
+        isContourImage=false;
+        hierarchy = new Mat();
     }
 
     public void releaseResultBitmap(Bitmap bitmap) {
@@ -200,6 +216,9 @@ public class SonyPhotoWorker implements Runnable {
     public void run() {
         Log.i("InfoDPlant","SonyPhotoWorker running");
         isResultAvailable = false;
+        isImage= false;
+        isContourImage=false;
+        isContour = false;
         mDoProcess = true;
         Rect previewRect = new Rect(0, 0, (int) mPreviewSize.width, (int) mPreviewSize.height);
 
@@ -291,9 +310,8 @@ public class SonyPhotoWorker implements Runnable {
      *
      */
     public boolean processResults(){
-        //TODO
-        isContour = processContour();
-        isContourImage = processContourImage();
+        if(isContour = processContour())
+            isContourImage = processContourImage();
         isImage = processOriginalImage();
         isResultAvailable = isContour && isContourImage && isImage;
         return isResultAvailable;
@@ -348,7 +366,11 @@ public class SonyPhotoWorker implements Runnable {
         int w = PREVIEW_WIDTH;
         int h = PREVIEW_HEIGHT;
         contourImage = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
-        Utils.matToBitmap(contour,contourImage);
+        Mat auxMat = Mat.zeros(contour.size(),CvType.CV_8UC1);
+        Scalar contourColor = new Scalar(255,255,255,0);
+        Imgproc.drawContours(auxMat,contours,maxAreaIdx,contourColor,2,3,hierarchy,0,new Point());
+        //TODO fix this bug
+        Utils.matToBitmap(auxMat,contourImage);
         return true;
     }
 
@@ -367,23 +389,34 @@ public class SonyPhotoWorker implements Runnable {
      * @return the biggest contour
      */
     private boolean processContour(){
-        ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-        Mat mat= new Mat();
-        Imgproc.findContours(mThreshFrameResult,contours,mat, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+        if (mThreshFrameResult ==null ) {
+            Log.e("InfoDPlant","No Frame to process!");
+            return false;
+        }
+        contours = new ArrayList<MatOfPoint>();
+        if(thresh >= THRESHOLD_HIGH_LIMIT) //Thresholding was not applied
+            Core.inRange(mCurrentFrameGray,defaultLowerInRange,defaultUpperInRange,mThreshFrameResult);
+        Imgproc.findContours(mThreshFrameResult,contours,hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
         double maxArea = -1;
-        int maxAreaIdx = -1;
+        maxAreaIdx = -1;
         if (contours.size()==0) {
             Log.i("InfoDPlant","Contour not found");
             return false;
         }
+        double contourArea = 0;
         for (int idx = 0; idx < contours.size(); idx++) {
             Mat contour = contours.get(idx);
-            double contourArea = Imgproc.contourArea(contour);
+            contourArea = Imgproc.contourArea(contour);
             if (contourArea > maxArea) {
                 maxArea = contourArea;
                 maxAreaIdx = idx;
             }
         }
+        if (contourArea < MIN_AREA) {
+            Log.i("InfoDPlant","Contour size not allowed :" + contourArea);
+            return false;
+        }
+
         contour = contours.get(maxAreaIdx);
         return true;
     }
@@ -418,4 +451,20 @@ public class SonyPhotoWorker implements Runnable {
     public interface ResultCallback {
         void onResultMatrixReady(Bitmap mat);
     }
+
+    public Mat getContour(){
+        if(isContour) return contour;
+        return null;
+    }
+
+    public Bitmap getContourImage(){
+        if(isContourImage) return contourImage;
+        return null;
+    }
+
+    public Bitmap getImage(){
+        if(isImage) return originalImage;
+        return null;
+    }
+
 }

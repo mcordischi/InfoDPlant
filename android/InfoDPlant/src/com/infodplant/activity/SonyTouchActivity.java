@@ -200,8 +200,8 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
 
         //Set the global variables
         InfoApp app = (InfoApp)getApplication();
-        app.setImage(mWorker.getOriginalImage());
-        app.setContourMat(mWorker.getContourMat());
+        app.setImage(mWorker.getImage());
+        app.setContourMat(mWorker.getContour());
         app.setContourImage(mWorker.getContourImage());
 
         startActivity(intent);
