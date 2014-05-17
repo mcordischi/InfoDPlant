@@ -188,7 +188,6 @@ public class SonyTouchActivity extends Activity implements SonyPhotoWorker.Resul
             Context context = getApplicationContext();
             CharSequence text = "No leaf found"; //TODO send to resources
             int duration = Toast.LENGTH_SHORT;
-
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
 

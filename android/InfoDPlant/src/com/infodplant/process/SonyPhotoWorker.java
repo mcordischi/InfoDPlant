@@ -28,10 +28,7 @@ package com.infodplant.process;
  */
 
 import android.graphics.Bitmap;
-import android.hardware.Camera;
 import android.util.Log;
-
-import com.infodplant.R;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
@@ -67,7 +64,7 @@ public class SonyPhotoWorker implements Runnable {
 
 
     // The max threshold value accepted
-    public static final double THRESHOLD_HIGH_LIMIT = 235;
+    public static final double THRESHOLD_HIGH_LIMIT = 245;
     // Increasing the threshold
     public static final double THRESHOLD_UPPER_BOUND = 170;
 
@@ -75,21 +72,23 @@ public class SonyPhotoWorker implements Runnable {
     private double thresh = 999999;
 
     //NEW! in range function
+    //TODO remove this stupid idea!
     private Scalar lowerInRange = new Scalar(0,0,0);
     private Scalar upperInRange = new Scalar(0,0,0);
     private static Scalar defaultLowerInRange = new Scalar(45,0,45);
     private static Scalar defaultUpperInRange = new Scalar(220,255,220);
-    public static final double IN_RANGE_LOWER_BOUD = 45;
-    public static final double IN_RANGE_UPPER_BOUD = 45;
 
+    public static final double IN_RANGE_LOWER_BOUD = 60;
+    public static final double IN_RANGE_UPPER_BOUD = 60;
+    public static final double DEFAULT_THRESH_VALUE = 190;
 
     // Preview size
-    private static int PREVIEW_WIDTH = 720;
-    private static int PREVIEW_HEIGHT = 480;
+    private static int DEFAULT_PREVIEW_WIDTH = 720;
+    private static int DEFAULT_PREVIEW_HEIGHT = 480;
     private Size mPreviewSize;
 
     //Minimun allowed Area Size
-    private static double MIN_AREA = 50;
+    private static double MIN_AREA = 0;
 
     /**
      * Booleans
@@ -104,7 +103,6 @@ public class SonyPhotoWorker implements Runnable {
      * Matrices used to hold the actual image data for each processing step
      */
     private Mat mCurrentFrame;
-    private Mat mFilteredFrame;
     private Mat mThreshFrameResult;
     private Mat mCurrentFrameGray;
     private Mat hierarchy;
@@ -136,7 +134,7 @@ public class SonyPhotoWorker implements Runnable {
         Log.i("InfoDPlant","SonyPhotoWorker Created");
         mCameraId = cameraId;
         // Default preview size
-        mPreviewSize = new Size(PREVIEW_WIDTH, PREVIEW_HEIGHT);
+        mPreviewSize = new Size(DEFAULT_PREVIEW_WIDTH, DEFAULT_PREVIEW_HEIGHT);
         isContour = false;
         isResultAvailable = false;
         isImage= false;
@@ -195,9 +193,8 @@ public class SonyPhotoWorker implements Runnable {
      */
     private void initMatrices() {
         mCurrentFrame = new Mat();
-        mCurrentFrameGray = new Mat(PREVIEW_WIDTH, PREVIEW_HEIGHT,CvType.CV_8SC1);
-        mFilteredFrame = new Mat();
-        mThreshFrameResult = new Mat(PREVIEW_WIDTH, PREVIEW_HEIGHT,CvType.CV_8SC1);
+        mCurrentFrameGray = new Mat((int)mPreviewSize.width, (int)mPreviewSize.height,CvType.CV_8UC1);
+        mThreshFrameResult = new Mat((int)mPreviewSize.width, (int)mPreviewSize.height,CvType.CV_8SC1);
 
         // Since drawing to screen occurs on a different thread than the processing,
         // we use a queue to handle the bitmaps we will draw to screen
@@ -274,17 +271,13 @@ public class SonyPhotoWorker implements Runnable {
 //                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mThreshFrameResult);
 
                     //InRange ThresHolding
-                    Core.inRange(mCurrentFrameGray,lowerInRange,upperInRange,mThreshFrameResult);
-
-//                    //Basic Thresholding
-//                    double threshold = Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh,
-//                            255.0, Imgproc.THRESH_BINARY);
-
-                    // Clear (set to black) the filtered image frame
-//                    mFilteredFrame.setTo(new Scalar(0, 0, 0));
-                    // Copy the current frame in RGB to the filtered frame using the mask.
-                    // Only the pixels in the mask will be copied.
-//                    mCurrentFrame.copyTo(mFilteredFrame, mThreshFrameResult);
+                    Imgproc.Canny(mCurrentFrameGray,mThreshFrameResult,thresh-IN_RANGE_LOWER_BOUD,thresh+IN_RANGE_UPPER_BOUD);
+                    //TODO remove inRange
+                    //Core.inRange(mCurrentFrameGray,lowerInRange,upperInRange,mThreshFrameResult);
+                    //TODO compare canny w classic threshold
+//                  //Basic Thresholding
+                  //double threshold = Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh-IN_RANGE_LOWER_BOUD,
+                  //        thresh+IN_RANGE_UPPER_BOUD, Imgproc.THRESH_BINARY);
 
                     notifyResultCallback(mThreshFrameResult);
                 } else {
@@ -339,6 +332,7 @@ public class SonyPhotoWorker implements Runnable {
     }
 
     /**
+     * @deprecated Delete on next code review
      * Changes the In range threshold values. Used when applying InRangeThreshold
      * @param roi the region of interest. The range value will be the mean of the roi +- the bounds
      */
@@ -363,13 +357,16 @@ public class SonyPhotoWorker implements Runnable {
      */
     private boolean processContourImage(){
         if (!isContour) return false;
-        int w = PREVIEW_WIDTH;
-        int h = PREVIEW_HEIGHT;
-        contourImage = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
-        Mat auxMat = Mat.zeros(contour.size(),CvType.CV_8UC1);
-        Scalar contourColor = new Scalar(255,255,255,0);
-        Imgproc.drawContours(auxMat,contours,maxAreaIdx,contourColor,2,3,hierarchy,0,new Point());
-        //TODO fix this bug
+        int w = (int)mPreviewSize.width;
+        int h = (int)mPreviewSize.height;
+        Mat auxMat = new Mat(h, w, CvType.CV_8UC1);
+        Scalar contourColor = new Scalar(127,127,127);
+        for (int i = 0 ; i<contours.size();i++)
+            if (i!= maxAreaIdx)
+                    Imgproc.drawContours(auxMat,contours,i,contourColor,-1);
+        contourColor = new Scalar(255,255,255);
+        Imgproc.drawContours(auxMat,contours,maxAreaIdx,contourColor,2);
+        contourImage = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(auxMat,contourImage);
         return true;
     }
@@ -395,7 +392,9 @@ public class SonyPhotoWorker implements Runnable {
         }
         contours = new ArrayList<MatOfPoint>();
         if(thresh >= THRESHOLD_HIGH_LIMIT) //Thresholding was not applied
-            Core.inRange(mCurrentFrameGray,defaultLowerInRange,defaultUpperInRange,mThreshFrameResult);
+            Imgproc.Canny(mCurrentFrameGray, mThreshFrameResult, DEFAULT_THRESH_VALUE - IN_RANGE_LOWER_BOUD, DEFAULT_THRESH_VALUE + IN_RANGE_UPPER_BOUD);
+        //Core.inRange(mCurrentFrameGray,defaultLowerInRange,defaultUpperInRange,mThreshFrameResult);
+
         Imgproc.findContours(mThreshFrameResult,contours,hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
         double maxArea = -1;
         maxAreaIdx = -1;

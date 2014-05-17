@@ -68,7 +68,7 @@ public class PlantInfoActivity extends Activity {
         mImageView.setImageBitmap(originalImage);
 
         ImageView mContourView = (ImageView) findViewById(R.id.contourView);
-        contourImage = ((InfoApp)getApplication()).getImage();
+        contourImage = ((InfoApp)getApplication()).getContourImage();
         mContourView.setImageBitmap(contourImage);
     }
 
@@ -101,12 +101,13 @@ public class PlantInfoActivity extends Activity {
     /* Saves in media original image*/
     public void onSaveImageClick(View view){
         Log.i(appName, "Writing in external storage");
-        MediaStore.Images.Media.insertImage(getContentResolver(), originalImage, "myImage_" + getFileID() + ".jpg" , "infoDPlant");
+        MediaStore.Images.Media.insertImage(getContentResolver(), originalImage, "leaf" + getFileID() + ".jpg" , "infoDPlant");
     }
 
     /* Saves in media the contour as an image*/
     public void onSaveContourClick(View view){
-        //TODO
+        Log.i(appName, "Writing in external storage");
+        MediaStore.Images.Media.insertImage(getContentResolver(), contourImage, "leaf_contour" + getFileID() + ".jpg" , "infoDPlant");
     }
 
 
