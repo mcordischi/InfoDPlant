@@ -30,6 +30,11 @@ package com.infodplant.process;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.infodplant.process.imageprocessor.CannyImageProcessor;
+import com.infodplant.process.imageprocessor.ClassicThresholdImageProcessor;
+import com.infodplant.process.imageprocessor.ImageProcessor;
+import com.infodplant.process.imageprocessor.RGBImageProcessor;
+
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -56,37 +61,30 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class SonyPhotoWorker implements Runnable {
     public static final String TAG = "OpenCVWorker";
+    public boolean debug = false;
 
     public static final int FIRST_CAMERA = 0;
     public static final int SECOND_CAMERA = 1;
 
     public static final int RESULT_MATRIX_BUFFER_SIZE = 3;
 
-    //Threshold type
-    public static final int THRESH_TYPE_CLASSIC = 0;
-    public static final int THRESH_TYPE_CANNY = 1;
-    public static final int THRESH_TYPE_RGB = 2;
-    public static final int THRESH_TYPE_HSV = 3;
-
-    private int threshType=0;
-
-    // The max threshold value accepted
-    public static final double THRESHOLD_HIGH_LIMIT = 245;
-    // Increasing the threshold
-    public static final double THRESHOLD_UPPER_BOUND = 170;
-
-    //Threshold BaseLine
-    private double thresh = 999999;
-
-    //NEW! in range function
+    //In range function
     private Scalar lowerInRange = new Scalar(0,0,0);
     private Scalar upperInRange = new Scalar(0,0,0);
-    private static Scalar defaultLowerInRange = new Scalar(45,0,45);
-    private static Scalar defaultUpperInRange = new Scalar(220,255,220);
 
-    public static final double IN_RANGE_LOWER_BOUD = 0;
-    public static final double IN_RANGE_UPPER_BOUD = 0;
-    public static final double DEFAULT_THRESH_VALUE = 190;
+
+
+
+    private static Scalar HSV_defaultLowerInRange = new Scalar(45,0,45);
+    private static Scalar HSV_defaultUpperInRange = new Scalar(220,255,220);
+    private static Scalar HSV_lowerInRange = new Scalar(10,10,10);
+    private static Scalar HSV_upperInRange = new Scalar(10,10,10);
+
+
+    //ImageProcessorAlgorithm
+    private ImageProcessor processor = new CannyImageProcessor();
+
+
 
     // Preview size
     private static int DEFAULT_PREVIEW_WIDTH = 720;
@@ -110,8 +108,6 @@ public class SonyPhotoWorker implements Runnable {
      */
     private Mat mCurrentFrame;
     private Mat mThreshFrameResult;
-    private Mat mCurrentFrameGray;
-    private Mat hierarchy;
 
 
     /**
@@ -145,7 +141,6 @@ public class SonyPhotoWorker implements Runnable {
         isResultAvailable = false;
         isImage= false;
         isContourImage=false;
-        hierarchy = new Mat();
     }
 
     public void releaseResultBitmap(Bitmap bitmap) {
@@ -199,9 +194,9 @@ public class SonyPhotoWorker implements Runnable {
      */
     private void initMatrices() {
         mCurrentFrame = new Mat();
-        mCurrentFrameGray = new Mat((int)mPreviewSize.width, (int)mPreviewSize.height,CvType.CV_8UC1);
         mThreshFrameResult = new Mat((int)mPreviewSize.width, (int)mPreviewSize.height,CvType.CV_8SC1);
 
+        processor.initProcessor(mPreviewSize);
         // Since drawing to screen occurs on a different thread than the processing,
         // we use a queue to handle the bitmaps we will draw to screen
         mResultBitmaps.clear();
@@ -237,11 +232,6 @@ public class SonyPhotoWorker implements Runnable {
                 // Retrieve the next frame from the camera in RGB format
                 mCamera.retrieve(mCurrentFrame, Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGB);
 
-
-                // Convert the RGB frame to HSV as it is a more appropriate format when calling Core.inRange
-                Imgproc.cvtColor(mCurrentFrame, mCurrentFrameGray, Imgproc.COLOR_RGB2GRAY);
-                //mCurrentFrame.copyTo(mCurrentFrameGray);
-
                 // If we have selected a new point, get the color range and decide new threshold
                 if (mSelectedPoint != null) {
 
@@ -260,42 +250,17 @@ public class SonyPhotoWorker implements Runnable {
                     // ROI (Region Of Interest) is used to find the average value around the point we clicked.
                     // This will reduce the risk of getting "freak" values if the pixel where we clicked has an unexpected value
                     Rect roiRect = new Rect((int) (mSelectedPoint.x - 2), (int) (mSelectedPoint.y - 2), 5, 5);
-                    // Get the Matrix representing the ROI
-                    Mat roi = mCurrentFrameGray.submat(roiRect);
-                    changeThresholdValue(roi);
-
-                    //For InRange Threshold
-                    Mat roiInRange = mCurrentFrame.submat(roiRect);
-                    changeInRangeValues(roiInRange);
-
+                    processor.onSelectedPoint(mCurrentFrame,roiRect);
                     mSelectedPoint = null;
                 }
 
-                // If we have selected thresh, apply the threshold
-                if (thresh < THRESHOLD_HIGH_LIMIT) {
-                    // Using the color limits to generate a mask (mThreshFrameResult)
-//                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mThreshFrameResult);
-                    switch( threshType){
-                        case THRESH_TYPE_CLASSIC:
-                            //Basic Thresholding
-                            Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh-IN_RANGE_LOWER_BOUD,
-                                              thresh+IN_RANGE_UPPER_BOUD, Imgproc.THRESH_BINARY);
-                            break;
-                        case THRESH_TYPE_CANNY:
-                            Imgproc.Canny(mCurrentFrameGray,mThreshFrameResult,thresh-IN_RANGE_LOWER_BOUD,thresh+IN_RANGE_UPPER_BOUD);
-                            break;
-                        case THRESH_TYPE_HSV:;
-                            //TODO
-                        case THRESH_TYPE_RGB:;
-                            //TODO
-                    }
-                    notifyResultCallback(mThreshFrameResult);
-                } else {
-                    notifyResultCallback(mCurrentFrame);
-                }
+                mThreshFrameResult = processor.processMat(mCurrentFrame);
+                notifyResultCallback(mThreshFrameResult);
 
-//                fps = measureFps();
-//                notifyFpsResult(fps);
+                if (debug){
+                    //fps = measureFps();
+                    //notifyFpsResult(fps);
+                }
             }
         }
 
@@ -318,48 +283,6 @@ public class SonyPhotoWorker implements Runnable {
         isImage = processOriginalImage();
         isResultAvailable = isContour && isContourImage && isImage;
         return isResultAvailable;
-    }
-
-    /**
-     * Changes the Threshold base line. More information in
-     * http://docs.opencv.org/doc/tutorials/imgproc/threshold/threshold.html
-     * @param roi the region of interest. The thresh value will be the mean of the roi, minus a constant
-     */
-    private void changeThresholdValue(Mat roi){
-        Log.i("InfoDPlant","Changing threshold Value");
-        // Calculate the mean value of the the ROI matrix
-        Scalar sumColor = Core.mean(roi);
-        double[] sumColorValues = sumColor.val;
-
-//        Dunno why selsectedColor is used, So I commented it. If it doesn't work, revive this code
-//        double[] selectedColor = mCurrentFrameGray.get((int) mSelectedPoint.x, (int) mSelectedPoint.y);
-//        if (selectedColor != null) {
-
-        //use channel 1
-        thresh = sumColorValues[0] + THRESHOLD_UPPER_BOUND;
-
-
-    }
-
-    /**
-     * @deprecated Delete on next code review
-     * Changes the In range threshold values. Used when applying InRangeThreshold
-     * @param roi the region of interest. The range value will be the mean of the roi +- the bounds
-     */
-    private void changeInRangeValues(Mat roi){
-        // Calculate the mean value of the the ROI matrix
-        Scalar sumColor = Core.mean(roi);
-        double[] sumColorValues = sumColor.val;
-
-        upperInRange.set(new double[]{sumColorValues[0] + IN_RANGE_UPPER_BOUD,
-                sumColorValues[1] + IN_RANGE_UPPER_BOUD,
-                sumColorValues[2] + IN_RANGE_UPPER_BOUD});
-
-
-        lowerInRange.set(new double[]{sumColorValues[0] - IN_RANGE_LOWER_BOUD,
-                sumColorValues[1] - IN_RANGE_LOWER_BOUD,
-                sumColorValues[2] - IN_RANGE_LOWER_BOUD});
-
     }
 
     /**
@@ -396,16 +319,14 @@ public class SonyPhotoWorker implements Runnable {
      * @return the biggest contour
      */
     private boolean processContour(){
-        if (mThreshFrameResult ==null ) {
+        if (mCurrentFrame ==null ) {
             Log.e("InfoDPlant","No Frame to process!");
             return false;
         }
-        contours = new ArrayList<MatOfPoint>();
-        if(thresh >= THRESHOLD_HIGH_LIMIT) //Thresholding was not applied
-            Imgproc.Canny(mCurrentFrameGray, mThreshFrameResult, DEFAULT_THRESH_VALUE - IN_RANGE_LOWER_BOUD, DEFAULT_THRESH_VALUE + IN_RANGE_UPPER_BOUD);
-        //Core.inRange(mCurrentFrameGray,defaultLowerInRange,defaultUpperInRange,mThreshFrameResult);
+        contours = processor.getContours(mCurrentFrame);
 
-        Imgproc.findContours(mThreshFrameResult,contours,hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+
+//        Imgproc.findContours(mThreshFrameResult,contours,hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
         double maxArea = -1;
         maxAreaIdx = -1;
         if (contours.size()==0) {
@@ -445,13 +366,7 @@ public class SonyPhotoWorker implements Runnable {
         mSelectedPoint = new Point(x, y);
     }
 
-    /**
-     * Resets the thresh value
-     */
-    public void clearSelectedColor() {
-        thresh = 99999 ;
-        mSelectedPoint = null;
-    }
+
 
     public Size getPreviewSize() {
         return mPreviewSize;
@@ -475,14 +390,4 @@ public class SonyPhotoWorker implements Runnable {
         if(isImage) return originalImage;
         return null;
     }
-
-    public int getThreshType(){
-        return threshType;
-    }
-
-
-    public void setThreshType(int t){
-        threshType = t;
-    }
-
 }

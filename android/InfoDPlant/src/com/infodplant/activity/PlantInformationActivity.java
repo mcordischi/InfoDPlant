@@ -3,18 +3,15 @@ package com.infodplant.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.infodplant.R;
 import com.infodplant.image.ImageHandler;
-import com.infodplant.process.ImageProcessor;
 import com.infodplant.process.ImageSender;
 
 import java.io.File;
@@ -107,9 +104,6 @@ public class PlantInformationActivity extends Activity {
      */
     public void prcImage(View view){
     //TODO
-        ImageProcessor imgProc = new ImageProcessor(imgHandler,this);
-        imgProc.execute(imgHandler.getPhotoPath());
-
         //Set the button to send image
         Button prcImageBut = (Button) findViewById(R.id.prcImage);
         prcImageBut.setText(R.string.sendImage);
