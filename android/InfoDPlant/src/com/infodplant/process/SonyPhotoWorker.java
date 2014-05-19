@@ -62,6 +62,13 @@ public class SonyPhotoWorker implements Runnable {
 
     public static final int RESULT_MATRIX_BUFFER_SIZE = 3;
 
+    //Threshold type
+    public static final int THRESH_TYPE_CLASSIC = 0;
+    public static final int THRESH_TYPE_CANNY = 1;
+    public static final int THRESH_TYPE_RGB = 2;
+    public static final int THRESH_TYPE_HSV = 3;
+
+    private int threshType=0;
 
     // The max threshold value accepted
     public static final double THRESHOLD_HIGH_LIMIT = 245;
@@ -72,14 +79,13 @@ public class SonyPhotoWorker implements Runnable {
     private double thresh = 999999;
 
     //NEW! in range function
-    //TODO remove this stupid idea!
     private Scalar lowerInRange = new Scalar(0,0,0);
     private Scalar upperInRange = new Scalar(0,0,0);
     private static Scalar defaultLowerInRange = new Scalar(45,0,45);
     private static Scalar defaultUpperInRange = new Scalar(220,255,220);
 
-    public static final double IN_RANGE_LOWER_BOUD = 60;
-    public static final double IN_RANGE_UPPER_BOUD = 60;
+    public static final double IN_RANGE_LOWER_BOUD = 0;
+    public static final double IN_RANGE_UPPER_BOUD = 0;
     public static final double DEFAULT_THRESH_VALUE = 190;
 
     // Preview size
@@ -269,16 +275,20 @@ public class SonyPhotoWorker implements Runnable {
                 if (thresh < THRESHOLD_HIGH_LIMIT) {
                     // Using the color limits to generate a mask (mThreshFrameResult)
 //                    Core.inRange(mCurrentFrameGray, mLowerColorLimit, mUpperColorLimit, mThreshFrameResult);
-
-                    //InRange ThresHolding
-                    Imgproc.Canny(mCurrentFrameGray,mThreshFrameResult,thresh-IN_RANGE_LOWER_BOUD,thresh+IN_RANGE_UPPER_BOUD);
-                    //TODO remove inRange
-                    //Core.inRange(mCurrentFrameGray,lowerInRange,upperInRange,mThreshFrameResult);
-                    //TODO compare canny w classic threshold
-//                  //Basic Thresholding
-                  //double threshold = Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh-IN_RANGE_LOWER_BOUD,
-                  //        thresh+IN_RANGE_UPPER_BOUD, Imgproc.THRESH_BINARY);
-
+                    switch( threshType){
+                        case THRESH_TYPE_CLASSIC:
+                            //Basic Thresholding
+                            Imgproc.threshold(mCurrentFrameGray, mThreshFrameResult, thresh-IN_RANGE_LOWER_BOUD,
+                                              thresh+IN_RANGE_UPPER_BOUD, Imgproc.THRESH_BINARY);
+                            break;
+                        case THRESH_TYPE_CANNY:
+                            Imgproc.Canny(mCurrentFrameGray,mThreshFrameResult,thresh-IN_RANGE_LOWER_BOUD,thresh+IN_RANGE_UPPER_BOUD);
+                            break;
+                        case THRESH_TYPE_HSV:;
+                            //TODO
+                        case THRESH_TYPE_RGB:;
+                            //TODO
+                    }
                     notifyResultCallback(mThreshFrameResult);
                 } else {
                     notifyResultCallback(mCurrentFrame);
@@ -464,6 +474,15 @@ public class SonyPhotoWorker implements Runnable {
     public Bitmap getImage(){
         if(isImage) return originalImage;
         return null;
+    }
+
+    public int getThreshType(){
+        return threshType;
+    }
+
+
+    public void setThreshType(int t){
+        threshType = t;
     }
 
 }
