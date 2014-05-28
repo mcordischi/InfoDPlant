@@ -18,9 +18,9 @@ import java.util.ArrayList;
  */
 public class ClassicThresholdImageProcessor extends ImageProcessor {
 
-    protected static final double IN_RANGE_LOWER_BOUD = 40;
-    protected static final double IN_RANGE_UPPER_BOUD = 40;
-    protected static final double DEFAULT_THRESH_VALUE = 190;
+    protected static final double IN_RANGE_LOWER_BOUD = 60;
+    protected static final double IN_RANGE_UPPER_BOUD = 30;
+    protected static final double DEFAULT_THRESH_VALUE = 130;
 
     //Threshold BaseLine
     protected double thresh = 999999;
@@ -30,7 +30,7 @@ public class ClassicThresholdImageProcessor extends ImageProcessor {
 
 
     // The max threshold value accepted
-    protected static final double THRESHOLD_HIGH_LIMIT = 245;
+    protected static final double THRESHOLD_HIGH_LIMIT = 200;
 
 
     @Override
@@ -52,18 +52,13 @@ public class ClassicThresholdImageProcessor extends ImageProcessor {
 
         Imgproc.cvtColor(currentFrame, currentFrameGray, Imgproc.COLOR_RGB2GRAY);
 
-        Mat roi = currentFrame.submat(roiRect);
+        Mat roi = currentFrameGray.submat(roiRect);
         // Calculate the mean value of the the ROI matrix
         Scalar sumColor = Core.mean(roi);
-        double[] sumColorValues = sumColor.val;
-
-//        Dunno why selsectedColor is used, So I commented it. If it doesn't work, revive this code
-//        double[] selectedColor = GRAY_mCurrentFrame.get((int) mSelectedPoint.x, (int) mSelectedPoint.y);
-//        if (selectedColor != null) {
-
-        //use channel 1
+        double[] sumColorValues = sumColor.val; //use channel 1
+        if (sumColorValues[0] > THRESHOLD_HIGH_LIMIT) { thresh = 99999; return false;}
         thresh = sumColorValues[0] ;//+ THRESHOLD_UPPER_BOUND;
-
+        Log.i("InfoDPlant","Thresh val: " + thresh);
         return true;
     }
 
@@ -82,8 +77,12 @@ public class ClassicThresholdImageProcessor extends ImageProcessor {
     protected Mat forcedProcess(Mat currentFrame){
         thresh = (thresh > THRESHOLD_HIGH_LIMIT) ? DEFAULT_THRESH_VALUE : thresh;
         Imgproc.cvtColor(currentFrame, currentFrameGray, Imgproc.COLOR_RGB2GRAY);
-        Imgproc.threshold(currentFrameGray, currentFrameGray, thresh- IN_RANGE_LOWER_BOUD,
-                thresh+ IN_RANGE_UPPER_BOUD, Imgproc.THRESH_BINARY);
+        //Inverted values
+        double threshLow = 255 - Math.min(thresh+ IN_RANGE_LOWER_BOUD,255);
+        double threshHigh = 255 - Math.max(thresh- IN_RANGE_UPPER_BOUD,0) ;
+        Log.i("InfoDPlant","InRange val: " + threshLow + "," +
+                threshHigh);
+        Imgproc.threshold(currentFrameGray, currentFrameGray,threshLow,threshHigh, Imgproc.THRESH_BINARY);
         return currentFrameGray;
     }
 }

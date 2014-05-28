@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * Created by marto on 5/19/14.
  */
 public class HSVImageProcessor extends ImageProcessor {
-    protected static Scalar lowerAllowedRange = new Scalar(20,20,20);
-    protected static Scalar upperAllowedRange = new Scalar(235,235,235);
-    protected static Scalar defaultLowerInRange = new Scalar(45,0,45);
-    protected static Scalar defaultUpperInRange = new Scalar(220,255,220);
-    protected static Scalar lowerBoundRange = new Scalar(65,85,65);
-    protected static Scalar upperBoundRange = new Scalar(65,85,65);
+    protected static Scalar lowerAllowedRange = new Scalar(0,40,00);
+    protected static Scalar upperAllowedRange = new Scalar(179,255,255);
+    protected static Scalar defaultLowerInRange = new Scalar(20,50,20);
+    protected static Scalar defaultUpperInRange = new Scalar(179,255,255);
+    protected static Scalar lowerBoundRange = new Scalar(50,80,80);
+    protected static Scalar upperBoundRange = new Scalar(50,150,150);
 
     //In range function
     protected Scalar lowerInRange = new Scalar(0,0,0);
@@ -42,17 +42,22 @@ public class HSVImageProcessor extends ImageProcessor {
     public Mat processMat(Mat currentFrame) {
         if (!applyThreshold)
             return currentFrame;
+        Imgproc.cvtColor(currentFrame, currentFrameHSV, Imgproc.COLOR_RGB2HSV);
         return forcedProcess(currentFrame);
     }
 
     @Override
     public boolean onSelectedPoint(Mat currentFrame, Rect roiRect) {
         Log.i("InfoDPlant", "Changing inRange Value");
-        Mat roi = currentFrame.submat(roiRect);
+        Imgproc.cvtColor(currentFrame, currentFrameHSV, Imgproc.COLOR_RGB2HSV);
+
+        Mat roi = currentFrameHSV.submat(roiRect);
 
         // Calculate the mean value of the the ROI matrix
         Scalar sumColor = Core.mean(roi);
         double[] sumColorValues = sumColor.val;
+
+        Log.i("InfoDPlant", "Touch val= " + sumColorValues[0] + "," + sumColorValues[1] + ","+ sumColorValues[2]);
 
         //Accept new values?
         applyThreshold = true;
@@ -64,16 +69,18 @@ public class HSVImageProcessor extends ImageProcessor {
         if (!applyThreshold)
             return applyThreshold;
 
-
         //Change InRange values
-        upperInRange.set(new double[]{sumColorValues[0] + upperBoundRange.val[0],
-                sumColorValues[1] +  upperBoundRange.val[1],
-                sumColorValues[2] +  upperBoundRange.val[2]});
+        upperInRange.set(new double[]{Math.min(sumColorValues[0] + upperBoundRange.val[0],upperAllowedRange.val[0]),
+                Math.min(sumColorValues[1] +  upperBoundRange.val[1],upperAllowedRange.val[1]),
+                Math.min(sumColorValues[2] +  upperBoundRange.val[2], upperAllowedRange.val[2])});
 
 
-        lowerInRange.set(new double[]{sumColorValues[0] - lowerBoundRange.val[0],
-                sumColorValues[1] - lowerBoundRange.val[1],
-                sumColorValues[2] - lowerBoundRange.val[2]});
+        lowerInRange.set(new double[]{Math.max(sumColorValues[0] - lowerBoundRange.val[0],lowerAllowedRange.val[0]),
+                Math.max(sumColorValues[1] - lowerBoundRange.val[1],lowerAllowedRange.val[1]),
+                        Math.max(sumColorValues[2] - lowerBoundRange.val[2],lowerAllowedRange.val[2])});
+
+        Log.i("InfoDPlant", "Lower= " + lowerInRange.val[0] + "," + lowerInRange.val[1] + ","+ lowerInRange.val[2] + ",");
+        Log.i("InfoDPlant", "Upper= " + upperInRange.val[0] + "," + upperInRange.val[1] + ","+ upperInRange.val[2] + ",");
 
 
         return applyThreshold;
@@ -102,8 +109,10 @@ public class HSVImageProcessor extends ImageProcessor {
         }
 
         Mat imgThresholded = new Mat();
-        Core.inRange(currentFrame, low, up, imgThresholded);
 
+        Core.inRange(currentFrameHSV, low, up, imgThresholded);
+
+        Log.i("InfoDPlant", "HSV= " + low + "," + up);
         //morphological opening (remove small objects from the foreground)
         Imgproc.erode(imgThresholded, imgThresholded, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE,SMALL_SIZE) );
         Imgproc.dilate( imgThresholded, imgThresholded, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, SMALL_SIZE) );

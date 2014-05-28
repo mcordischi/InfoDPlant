@@ -26,7 +26,7 @@
         android:text="Save Image"
         android:id="@+id/saveImg"
         android:layout_gravity="center_horizontal"
-        android:onClick="onSaveContourClick" />
+        android:onClick="onSaveImageClick" />
 
     <ImageView
         android:layout_width="wrap_content"

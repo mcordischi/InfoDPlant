@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="logLevel" value="info" />
+        <option name="logMessagePattern" value="Touch" />
+        <option name="logTagPattern" value="InfoDPlant" />
+        <option name="name" value="Touch" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayoutPreviewToolWindow">
     <option name="state">
       <GlobalState>
@@ -24,17 +36,15 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CUSTOM_FILTER" value="infodplant" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="INFO" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d43c4fa-e752-4296-a90a-0db5136460d2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/CannyImageProcessor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ClassicThresholdImageProcessor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/HSVImageProcessor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ImageProcessor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/RGBImageProcessor.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/infodplant/process/ImageProcessor.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java" afterPath="$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/CannyImageProcessor.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/CannyImageProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ClassicThresholdImageProcessor.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ClassicThresholdImageProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/HSVImageProcessor.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/HSVImageProcessor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" afterPath="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/plant_info.xml" afterPath="$PROJECT_DIR$/res/layout/plant_info.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PhotoExample.iws" />
@@ -107,67 +117,17 @@
       <file leaf-file-name="SonyPhotoWorker.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="34" selection-start="6826" selection-end="6826" vertical-scroll-proportion="0.0" vertical-offset="2693" max-vertical-offset="6660">
+            <state line="67" column="46" selection-start="2943" selection-end="2943" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6426">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RGBImageProcessor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/RGBImageProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="0" selection-start="3182" selection-end="3182" vertical-scroll-proportion="0.0" vertical-offset="1504" max-vertical-offset="2088">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2519#2531#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HSVImageProcessor.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="HSVImageProcessor.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/HSVImageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="47" selection-start="2801" selection-end="2801" vertical-scroll-proportion="0.0" vertical-offset="1378" max-vertical-offset="2232">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2738#2750#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageProcessor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ImageProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="7" selection-start="735" selection-end="735" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1008">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassicThresholdImageProcessor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ClassicThresholdImageProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="0" selection-start="2043" selection-end="2348" vertical-scroll-proportion="0.0" vertical-offset="1018" max-vertical-offset="1710">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2176#2188#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CannyImageProcessor.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/CannyImageProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="69" selection-start="944" selection-end="944" vertical-scroll-proportion="0.310219" vertical-offset="334" max-vertical-offset="936">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#929#941#0" expanded="true" />
-              </folding>
+            <state line="24" column="66" selection-start="870" selection-end="870" vertical-scroll-proportion="0.5833333" vertical-offset="108" max-vertical-offset="2196">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -199,17 +159,17 @@
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/infodplant/process/ImageSaver.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/InfoApp.java" />
-        <option value="$PROJECT_DIR$/res/layout/plant_info.xml" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/process/thresholding/AbstractThresholding.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ImageProcessor.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/RGBImageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/CannyImageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ImageProcessor.java" />
+        <option value="$PROJECT_DIR$/res/layout/plant_info.xml" />
         <option value="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ClassicThresholdImageProcessor.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java" />
         <option value="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/HSVImageProcessor.java" />
-        <option value="$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/CannyImageProcessor.java" />
       </list>
     </option>
   </component>
@@ -266,60 +226,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InfoDPlantProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InfoDPlantAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InfoDPlantProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="InfoDPlantAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com.infodplant" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Default">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Changed Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -412,6 +318,114 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="imageprocessor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlantProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="infodplant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="activity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlantProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlantProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Default">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Changed Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlantProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlantAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlantProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InfoDPlantAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com.infodplant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -507,6 +521,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -532,19 +559,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -740,35 +754,35 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1280" height="776" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32669324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22302158" sideWeight="0.51660025" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771823" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3989432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4502297" sideWeight="0.56171876" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32802126" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22682928" sideWeight="0.45232275" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3093415" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0921659" sideWeight="0.43828124" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.60336906" sideWeight="0.43828124" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31796876" sideWeight="0.6707504" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.6746348" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2626016" sideWeight="0.5476773" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37173578" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37059724" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.3294964" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="1529" y="155" width="952" height="479" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964029" sideWeight="0.6746348" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924962" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22302158" sideWeight="0.51660025" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771823" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39940828" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -777,12 +791,12 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771823" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33884892" sideWeight="0.6830015" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32618684" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -843,15 +857,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="28" selection-start="1065" selection-end="1065" vertical-scroll-proportion="1.0557276" vertical-offset="290" max-vertical-offset="1152">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#407#408#0" expanded="true" />
-            <element signature="e#439#440#0" expanded="true" />
-            <element signature="e#705#706#0" expanded="true" />
-            <element signature="e#741#742#0" expanded="true" />
-            <element signature="e#859#860#0" expanded="true" />
-            <element signature="e#892#893#0" expanded="true" />
-            <element signature="e#1035#1036#0" expanded="true" />
-            <element signature="e#1070#1071#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#407#408#0" expanded="false" />
+            <element signature="e#439#440#0" expanded="false" />
+            <element signature="e#705#706#0" expanded="false" />
+            <element signature="e#741#742#0" expanded="false" />
+            <element signature="e#859#860#0" expanded="false" />
+            <element signature="e#892#893#0" expanded="false" />
+            <element signature="e#1035#1036#0" expanded="false" />
+            <element signature="e#1070#1071#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -868,95 +882,80 @@
     </entry>
     <entry file="file:///opt/OpenCV-2.4.8-android-sdk/sdk/java/src/org/opencv/imgproc/Imgproc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5849" column="0" selection-start="229833" selection-end="229833" vertical-scroll-proportion="-0.47213113" vertical-offset="105282" max-vertical-offset="181260">
-          <folding />
-        </state>
+        <state line="5849" column="0" selection-start="229833" selection-end="229833" vertical-scroll-proportion="-0.47213113" vertical-offset="105282" max-vertical-offset="181260" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInformationActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="0" selection-start="3723" selection-end="3723" vertical-scroll-proportion="0.0" vertical-offset="2192" max-vertical-offset="2844">
-          <folding />
-        </state>
+        <state line="117" column="0" selection-start="3723" selection-end="3723" vertical-scroll-proportion="0.0" vertical-offset="2192" max-vertical-offset="2844" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/SonyTouchActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="42" selection-start="6436" selection-end="6436" vertical-scroll-proportion="-0.6196721" vertical-offset="3186" max-vertical-offset="4698">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/plant_info.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state line="28" column="8" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.0" vertical-offset="49" max-vertical-offset="810">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="41" selection-start="3754" selection-end="3754" vertical-scroll-proportion="0.49056605" vertical-offset="1378" max-vertical-offset="1908">
-          <folding />
-        </state>
+        <state line="177" column="42" selection-start="6436" selection-end="6436" vertical-scroll-proportion="-0.6196721" vertical-offset="3186" max-vertical-offset="4698" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/RGBImageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="0" selection-start="3182" selection-end="3182" vertical-scroll-proportion="0.0" vertical-offset="1504" max-vertical-offset="2088">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2519#2531#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2519#2531#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="34" selection-start="6826" selection-end="6826" vertical-scroll-proportion="0.0" vertical-offset="2693" max-vertical-offset="6660">
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ImageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="7" selection-start="735" selection-end="735" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1008">
+        <state line="41" column="76" selection-start="1067" selection-end="1067" vertical-scroll-proportion="0.56661314" vertical-offset="295" max-vertical-offset="918">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/plant_info.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="14" selection-start="1099" selection-end="1099" vertical-scroll-proportion="-11.172414" vertical-offset="216" max-vertical-offset="918">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#468#488#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/HSVImageProcessor.java">
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/activity/PlantInfoActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="47" selection-start="2801" selection-end="2801" vertical-scroll-proportion="0.0" vertical-offset="1378" max-vertical-offset="2232">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2738#2750#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ClassicThresholdImageProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="2043" selection-end="2348" vertical-scroll-proportion="0.0" vertical-offset="1018" max-vertical-offset="1710">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2176#2188#0" expanded="true" />
-          </folding>
+        <state line="109" column="71" selection-start="3641" selection-end="3641" vertical-scroll-proportion="1.3540983" vertical-offset="740" max-vertical-offset="1908">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/CannyImageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="69" selection-start="944" selection-end="944" vertical-scroll-proportion="0.310219" vertical-offset="334" max-vertical-offset="936">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#929#941#0" expanded="true" />
-          </folding>
+        <state line="30" column="36" selection-start="982" selection-end="982" vertical-scroll-proportion="0.7672131" vertical-offset="0" max-vertical-offset="702">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/ClassicThresholdImageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="58" selection-start="639" selection-end="639" vertical-scroll-proportion="0.32459018" vertical-offset="0" max-vertical-offset="1494">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/SonyPhotoWorker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="46" selection-start="2943" selection-end="2943" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6426">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/infodplant/process/imageprocessor/HSVImageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="66" selection-start="870" selection-end="870" vertical-scroll-proportion="0.5833333" vertical-offset="108" max-vertical-offset="2196">
+          <folding />
         </state>
       </provider>
     </entry>

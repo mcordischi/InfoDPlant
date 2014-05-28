@@ -29,15 +29,6 @@ public class CannyImageProcessor extends ClassicThresholdImageProcessor {
         ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 
         forcedProcess(currentFrame);
-        //TODO test
-        //morphological opening (remove small objects from the foreground)
-        Imgproc.erode(currentFrameGray, currentFrameGray, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE,SMALL_SIZE) );
-        Imgproc.dilate( currentFrameGray, currentFrameGray, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, SMALL_SIZE) );
-
-        //morphological closing (fill small holes in the foreground)
-        Imgproc.dilate( currentFrameGray, currentFrameGray, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, SMALL_SIZE) );
-        Imgproc.erode(currentFrameGray, currentFrameGray, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, SMALL_SIZE) );
-
 
         Imgproc.findContours(currentFrameGray,contours,new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 

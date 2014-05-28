@@ -32,6 +32,7 @@ import android.util.Log;
 
 import com.infodplant.process.imageprocessor.CannyImageProcessor;
 import com.infodplant.process.imageprocessor.ClassicThresholdImageProcessor;
+import com.infodplant.process.imageprocessor.HSVImageProcessor;
 import com.infodplant.process.imageprocessor.ImageProcessor;
 import com.infodplant.process.imageprocessor.RGBImageProcessor;
 
@@ -68,21 +69,8 @@ public class SonyPhotoWorker implements Runnable {
 
     public static final int RESULT_MATRIX_BUFFER_SIZE = 3;
 
-    //In range function
-    private Scalar lowerInRange = new Scalar(0,0,0);
-    private Scalar upperInRange = new Scalar(0,0,0);
-
-
-
-
-    private static Scalar HSV_defaultLowerInRange = new Scalar(45,0,45);
-    private static Scalar HSV_defaultUpperInRange = new Scalar(220,255,220);
-    private static Scalar HSV_lowerInRange = new Scalar(10,10,10);
-    private static Scalar HSV_upperInRange = new Scalar(10,10,10);
-
-
     //ImageProcessorAlgorithm
-    private ImageProcessor processor = new CannyImageProcessor();
+    private ImageProcessor processor = new HSVImageProcessor();
 
 
 
