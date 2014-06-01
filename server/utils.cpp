@@ -23,9 +23,9 @@ char inline encode64(int i)
 }
 
 //Converts a input with a list of integers to a Vector of points
-Vector<Point> * decodePointVector(char * input)
+cv::Vector<Point> decodePointVector(char * input)
 {
-    Vector<Point> * resultVector = new Vector<Point>();
+    cv::Vector<Point> resultVector;
     
 	char * iterator = input;
     
@@ -34,18 +34,18 @@ Vector<Point> * decodePointVector(char * input)
 		int x = (decode64(iterator++)<<6)+(decode64(iterator++));
 		int y = (decode64(iterator++)<<6)+(decode64(iterator++));
         Point p(x,y);
-        resultVector->push_back(p);
+        resultVector.push_back(p);
     }
     return resultVector;
 }
 
 //Converts a input with a list of integers to a Vector of points
-char * encodePointVector(Vector<Point> * inputVector)
+char * encodePointVector(cv::Vector<Point> * inputVector)
 {
     char * resultStr = (char*)malloc( inputVector->size()<<2 + 1 );
     char * it = resultStr;
 	
-	for(Vector<Point>::iterator iterator = inputVector->begin(); iterator!= inputVector->end(); iterator++)
+    for(cv::Vector<Point>::iterator iterator = inputVector->begin(); iterator!= inputVector->end(); iterator++)
 	{	
 		*(it++) = encode64(iterator->x>>6);
 		*(it++) = encode64(iterator->x&0x3F);

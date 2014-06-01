@@ -69,7 +69,7 @@ double curvature(vector<Point> contour)
     return acc/(double)n;
 }
 
-double rectangularity(vector<Point> contour)
+double rectangularity(cv::vector<Point> contour)
 {
 	int Area = contourArea(contour);
 	RotatedRect bbox = minAreaRect(contour);
@@ -77,7 +77,7 @@ double rectangularity(vector<Point> contour)
 	return Area / bboxArea;
 }
 
-double circularity(vector<Point> contour)
+double circularity(cv::vector<Point> contour)
 {
 	int Area = contourArea(contour);
 	int perimeter = arcLength(contour, 1);
