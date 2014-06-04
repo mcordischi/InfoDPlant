@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project( ServerApp )
 find_package( OpenCV REQUIRED )
-add_executable( Server server.cpp main.cpp process.cpp utils.cpp databasegen.cpp )
+add_executable( Server server.cpp main.cpp process.cpp utils.cpp databasegen.cpp naivebayesclassifier.cpp )
 if(WIN32)
   target_link_libraries(Server wsock32 ws2_32)
 endif()
