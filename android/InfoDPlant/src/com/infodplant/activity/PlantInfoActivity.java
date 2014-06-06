@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.infodplant.InfoApp;
 import com.infodplant.R;
+import com.infodplant.process.ImageSaver;
 import com.infodplant.process.ImageSender;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +35,7 @@ public class PlantInfoActivity extends Activity {
     private Bitmap originalImage;
     private Bitmap contourImage;
     private ImageSender imgSender;
+    private ImageSaver imgSaver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class PlantInfoActivity extends Activity {
         setContentView(R.layout.plant_info);
 
         //Initiate the ImageSender
-        imgSender = new ImageSender(this,getString(R.string.server_url));
+        imgSender = new ImageSender(((InfoApp)getApplication()),this,getString(R.string.server_url));
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -101,21 +103,15 @@ public class PlantInfoActivity extends Activity {
     /* Saves in media original image*/
     public void onSaveImageClick(View view){
         Log.i(appName, "Writing in external storage");
-        MediaStore.Images.Media.insertImage(getContentResolver(), originalImage, "leaf" + getFileID() + ".jpg" , "infoDPlant");
+        imgSaver.saveImage(getContentResolver(),originalImage);
+        //MediaStore.Images.Media.insertImage(getContentResolver(), originalImage, "leaf" + getFileID() + ".jpg" , "infoDPlant");
     }
 
     /* Saves in media the contour as an image*/
     public void onSaveContourClick(View view){
         Log.i(appName, "Writing in external storage");
-        MediaStore.Images.Media.insertImage(getContentResolver(), contourImage, "leaf_contour" + getFileID() + ".jpg" , "infoDPlant");
-    }
-
-
-    /* Generates an unique ID for files*/
-    private String getFileID(){
-        SimpleDateFormat formatter = new SimpleDateFormat("MM_dd_HH_mm_ss");
-        Date now = new Date();
-        return formatter.format(now);
+        imgSaver.saveContour(getContentResolver(),contourImage);
+        //MediaStore.Images.Media.insertImage(getContentResolver(), contourImage, "leaf_contour" + getFileID() + ".jpg" , "infoDPlant");
     }
 
 

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.graphics.Bitmap;
 
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 
 /**
  * Created by marto on 11/5/13.
@@ -28,7 +29,7 @@ public class InfoApp extends Application {
      * Global Variables
      */
     private Bitmap originalImage;
-    private Mat contourMat;
+    private MatOfPoint contourMat;
     private Bitmap contourImage;
 
     public void setImage(Bitmap image){
@@ -39,11 +40,11 @@ public class InfoApp extends Application {
         return originalImage;
     }
 
-    public void setContourMat(Mat mat){
-            contourMat = mat.clone();
+    public void setContourMat(MatOfPoint mat){
+            contourMat = mat;
     }
 
-    public Mat getContourMat(){
+    public MatOfPoint getContourMat(){
         return contourMat;
     }
 
