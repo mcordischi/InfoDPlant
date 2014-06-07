@@ -31,7 +31,8 @@ vector<Point> bigestContour(Mat img)
 }
 
 
-
+#include <iostream>
+#include <math.h>       /* isnan, sqrt */
 double circleFill(Mat img, Point center, int radius )
 {
 	Mat maskImg = Mat::zeros(img.size().height, img.size().width, img.type());
@@ -39,28 +40,40 @@ double circleFill(Mat img, Point center, int radius )
 	circle(maskImg, center, radius, Scalar(255, 255, 255), -1);
 	img.copyTo(resultImg, maskImg);
 	int total = countNonZero(maskImg);
-	int filled = countNonZero(resultImg);
+    int filled = countNonZero(resultImg);
+    if(std::isnan(filled)||std::isnan(total)||total==0)
+        std::cout << "Filled: " << filled << "\nTotal: " << total << "\nRadius: " << radius << std::endl;
 	return filled / (double)total;
 }
 
+#include <iostream>
 double curvature(vector<Point> contour)
 {
     double acc = 0;
     int n = 0;
+
+    Rect bbox = boundingRect(contour);
+    int offX = bbox.x+bbox.width;
+    int offY = bbox.y+bbox.height;
+
+    vector<Point> movedContour;
+    for(vector<Point>::iterator it = contour.begin(); it != contour.end(); ++it)
+        movedContour.push_back( Point( (*it).x+offX, (*it).y+offY));
+
+
     
+    Mat img = Mat::zeros(Size((offX*3), (offY*3)), CV_8UC1);
+    vector<vector<Point> > contours;
+    contours.push_back(movedContour);
+    drawContours( img, contours, 0, Scalar(255,255,255), -1);
+
     RotatedRect rotArea = minAreaRect(contour);
     int R = (rotArea.size.height + rotArea.size.width) / 2;
-    
-    Rect bbox = boundingRect(contour);
-    
-    Mat img = Mat::zeros(bbox.size().height*3, bbox.size().width*3, CV_8UC1);
-    vector<vector<Point> > contours;
-    contours.push_back(contour);
-    drawContours( img(Rect(0,0,bbox.size().height, bbox.size().width)), contours, 0, Scalar(255,255,255), -1);
-	for(vector<Point>::iterator it = contour.begin(); it != contour.end(); ++it)
+    double s = R*0.1;
+
+    for(vector<Point>::iterator it = movedContour.begin(); it != movedContour.end(); ++it)
     {
-        double s = R*0.1;
-        for(double r = .25; r <= R;r+=s)
+        for(double r = 1; r <= R;r+=s)
         {
             acc+= circleFill(img, *it, (int)r);
             n++;
@@ -79,8 +92,8 @@ double rectangularity(cv::vector<Point> contour)
 
 double circularity(cv::vector<Point> contour)
 {
-	int Area = contourArea(contour);
-	int perimeter = arcLength(contour, 1);
+    int Area = contourArea(contour);
+    int perimeter = arcLength(contour, 1);
 	double perimeterSqr = perimeter * perimeter;
 
 	return (4*PI*Area)/perimeterSqr;

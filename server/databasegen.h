@@ -1,7 +1,7 @@
 #ifndef DATABASEGEN_H
 #define DATABASEGEN_H
 
-typedef struct
+typedef struct distribution_s
 {
     double * distribution;
     unsigned int kinds;
@@ -13,6 +13,10 @@ distribution genDistributionFromDataset(char * configFilePath);
 void storeDistribution(distribution d, char * resultFilePath);
 
 distribution getDistributionFromFile(char * distributionFilePath);
+
+distribution genDistributionFromStats(char * statsFilePath);
+
+void genStats(char * configFilePath, char * resultFilePath);
 
 /* DEPRECATED */
 void gendatabase(char * configFilePath, char * resultFilePath);

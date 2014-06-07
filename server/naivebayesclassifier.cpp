@@ -16,7 +16,7 @@ const double PI = 3.1415926535897;
 void generateDistribution(double * distribution, const double * trainingSet, const unsigned int attributesCount, const unsigned int setCount, const unsigned int posteriorValuesCount)
 {
     unsigned int * count = (unsigned int*)malloc(posteriorValuesCount*sizeof(unsigned int));
-    memset(distribution, 0, 2*attributesCount*sizeof(double));
+    memset(distribution, 0, 3*attributesCount*posteriorValuesCount*sizeof(double));
     memset(count, 0, posteriorValuesCount*sizeof(unsigned int));
     for(unsigned int setIterator = 0; setIterator < setCount; setIterator++)
     {

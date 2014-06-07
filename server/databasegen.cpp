@@ -4,6 +4,7 @@
 
 typedef struct
 {
+    double type;
     double circ;
     double rect;
     double curv;
@@ -51,6 +52,8 @@ distribution getDistributionFromFile(char * distributionFilePath)
 
 #include "naivebayesclassifier.h"
 
+#include <iostream>
+
 distribution genDistributionFromDataset(char * configFilePath)
 {
 
@@ -72,13 +75,12 @@ distribution genDistributionFromDataset(char * configFilePath)
         unsigned int sample_count;
         configFileHandler >> sample_count;
 
-        unsigned int need = set_count + sample_count - 1;
-
+        unsigned int need = set_count + sample_count;
         // Expand trainingSet
         if(need>training_set_max)
         {
-            if(types_iterator < types_count/2 ) need = need / (types_iterator+1)*types_count;
-            realloc((void*)trainingSet,need*4*sizeof(double));
+            if(types_iterator < types_count/2 ){ need = need / (types_iterator+1)*types_count;}
+            trainingSet = (double*) realloc((void*)trainingSet,need*4*sizeof(double));
             training_set_max = need;
         }
 
@@ -87,10 +89,12 @@ distribution genDistributionFromDataset(char * configFilePath)
             std::string imgFilePath;
             configFileHandler >> imgFilePath;
             ImageInfo_ts currentImageInfo = getAttributes(imgFilePath.c_str());
-            trainingSet[set_count*4] = types_iterator;
-            trainingSet[set_count*4] = currentImageInfo.circ;
-            trainingSet[set_count*4] = currentImageInfo.curv;
-            trainingSet[set_count*4] = currentImageInfo.rect;
+            std::cout << "Writing " << set_count << "/" << training_set_max << std::endl;
+            trainingSet[set_count*4+0] = types_iterator;
+            trainingSet[set_count*4+1] = currentImageInfo.circ;
+            trainingSet[set_count*4+2] = currentImageInfo.curv;
+            trainingSet[set_count*4+3] = currentImageInfo.rect;
+            std::cout << "end set." << std::endl;
             set_count++;
         }
     }
@@ -104,6 +108,66 @@ distribution genDistributionFromDataset(char * configFilePath)
     d.kinds = types_count;
     generateDistribution(d.distribution, trainingSet, d.attributes, set_count, d.kinds);
     return d;
+}
+
+distribution genDistributionFromStats(char * statsFilePath)
+{
+    //Load configfile
+    std::ifstream statsFileHandler(statsFilePath, std::ios::ate | std::ios::binary);
+
+    unsigned int size = statsFileHandler.tellg() / sizeof(ImageInfo_ts);
+
+    distribution d;
+    double * trainingSet = (double*) malloc(size*sizeof(ImageInfo_ts));
+
+    d.attributes = sizeof(ImageInfo_ts)/sizeof(double);
+    d.kinds = 0;
+
+    statsFileHandler.seekg(std::ios::beg);
+
+    for(unsigned int i = 0; i < size; i++)
+    {
+        statsFileHandler.read((char*)(trainingSet+i*d.attributes),sizeof(ImageInfo_ts));
+        if(d.kinds<=(*(trainingSet+i*d.attributes))) d.kinds = (*(trainingSet+i*d.attributes))+1;
+    }
+
+
+    statsFileHandler.close();
+
+    d.distribution = (double*) malloc(3*d.kinds*sizeof(ImageInfo_ts));
+
+    generateDistribution(d.distribution, trainingSet, d.attributes, size, d.kinds);
+
+    return d;
+}
+
+void genStats(char * configFilePath, char * resultFilePath)
+{
+    //Load configfile
+    std::ifstream configFileHandler(configFilePath);
+
+    // Set output
+    std::ofstream resultFileHandler(resultFilePath, std::ios::binary);
+
+    unsigned int types_count;
+    configFileHandler >> types_count;
+    for(unsigned int types_iterator = 0; types_iterator < types_count; types_iterator++)
+    {
+        std::string typeName;
+        configFileHandler >> typeName;
+        unsigned int sample_count;
+        configFileHandler >> sample_count;
+        for(unsigned int sample_iterator = 0; sample_iterator < sample_count; sample_iterator++)
+        {
+            std::string imgFilePath;
+            configFileHandler >> imgFilePath;
+            ImageInfo_ts currentImageInfo = getAttributes(imgFilePath.c_str());
+            currentImageInfo.type = (double)types_iterator;
+            resultFileHandler.write( (char*) ( &(currentImageInfo) ), sizeof( ImageInfo_ts ) );
+        }
+    }
+    configFileHandler.close();
+    resultFileHandler.close();
 }
 
 /* DEPRECATED */
@@ -147,10 +211,15 @@ cv::vector<cv::Point> bigestContour(cv::Mat);
 
 ImageInfo_ts getAttributes(const char * imagePath)
 {
+    std::cout << "Loading: " << imagePath << std::endl;
     cv::vector< cv::Point > contour = bigestContour( cv::imread( imagePath, CV_LOAD_IMAGE_GRAYSCALE ) );
     ImageInfo_ts ii;
+    std::cout << "circularity" << std::endl;
     ii.circ = circularity(contour);
+    std::cout << "rectangularity" << std::endl;
     ii.rect = rectangularity(contour);
+    std::cout << "curvature" << std::endl;
     ii.curv = curvature(contour);
+    std::cout << "done." << std::endl;
     return ii;
 }

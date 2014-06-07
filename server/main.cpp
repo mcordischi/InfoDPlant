@@ -2,6 +2,7 @@
 #include <opencv2\opencv.hpp>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
 #include "process.h"
 #include "utils.h"
 #include "server.h"
@@ -42,14 +43,25 @@ char * proc(char * img)
 
 int main( int argc, char** argv )
 {
-    if(argc>3 && ( strcmp(argv[1], "--storedatabase") || strcmp(argv[1], "-s") ) )
+    if(argc>3 && ( !strcmp(argv[1], "--storedatabase") || !strcmp(argv[1], "-s") ) )
     {
         cout << "La operación puede tardar varios minutos (aprox 30'xImg en core2)" << endl;
-        d = getDistributionFromFile(argv[1]);
         genDistributionFromDataset(argv[2]);
         storeDistribution(d, argv[3]);
         if(argc>4 && strcmp(argv[4], "-r"))
             listen(&proc);
+    }
+    if(argc>3 && ( !strcmp(argv[1], "--genstats") || !strcmp(argv[1], "-g") ) )
+    {
+        cout << "Generando: La operación puede tardar varios minutos (aprox 30'xImg en core2)" << endl;
+        genStats(argv[2],argv[3]);
+    }
+    if(argc>2 && ( !strcmp(argv[1], "--fromstats") || !strcmp(argv[1], "-f") ) )
+    {
+        cout << "Generating distribution" << endl;
+        d = genDistributionFromStats(argv[2]);
+        cout << "Finish. Listening..." << endl;
+        listen(&proc);
     }
     else if(argc>2)
     {
