@@ -106,7 +106,7 @@ public class SonyPhotoWorker implements Runnable {
     boolean isImage;
     boolean isContourImage;
 
-    private Mat contour;
+    private MatOfPoint contour;
     private Bitmap originalImage;
     private Bitmap contourImage;
 
@@ -364,7 +364,7 @@ public class SonyPhotoWorker implements Runnable {
         void onResultMatrixReady(Bitmap mat);
     }
 
-    public Mat getContour(){
+    public MatOfPoint getContour(){
         if(isContour) return contour;
         return null;
     }
